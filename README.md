@@ -5,7 +5,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 1: Intro to GitOps & ArgoCD (Beginner)](./01_Intro_to_GitOps_ArgoCD/)
+## [Chapter 1: Intro to GitOps & ArgoCD (Beginner)](./01_intro_to_gitops_argocd/)
 
 - What is GitOps
 - GitOps Principles: Declarative, Versioned, Automated, Observable
@@ -13,7 +13,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 2: ArgoCD Basics (Beginner)](./02_ArgoCD_Basics/)
+## [Chapter 2: ArgoCD Basics (Beginner)](./02_argocd_basics/)
 
 - What is ArgoCD?
 - Why ArgoCD for GitOps?
@@ -38,7 +38,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 3: Setup & Installation (Beginner)](./03_Setup_Installation/)
+## [Chapter 3: Setup & Installation (Beginner)](./03_setup_installation/)
 
 - Prerequisites (KIND/EKS, kubectl, Helm, Git repo)
 - Installing ArgoCD on Kubernetes (kind)
@@ -47,7 +47,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 4: First App Deployment (Beginner)](./04_First_App_Deployment/)
+## [Chapter 4: First App Deployment (Beginner)](./04_first_app_deployment/)
 
 - Deploying the first NGINX app via ArgoCD
 - Application CRD walkthrough(manifest file)
@@ -57,7 +57,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 5: ArgoCD Features (Intermediate)](./05_ArgoCD_Features/)
+## [Chapter 5: ArgoCD Features (Intermediate)](./05_argocd_features/)
 
 - ArgoCD Projects (multi-team isolation + RBAC)
 - App of Apps pattern (managing multiple apps hierarchically)
@@ -70,7 +70,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 6: Argo Rollouts (Intermediate)](./06_Argo_Rollouts/)
+## [Chapter 6: Argo Rollouts (Intermediate)](./06_argocd_rollouts/)
 
 - What is Argo Rollouts?
 - Canary & Blue/Green deployments with ArgoCD
@@ -78,7 +78,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 7: Argo Workflows (Intermediate)](./07_Argo_Workflows/)
+## [Chapter 7: Argo Workflows (Intermediate)](./07_argocd_workflows/)
 
 - What is Argo Workflows? (K8s-native CI engine)
 - Defining workflows (build → test → deploy)
@@ -86,7 +86,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 8: Argo Events (Intermediate)](./08_Argo_Events/)
+## [Chapter 8: Argo Events (Intermediate)](./08_argocd_events/)
 
 - Event-driven GitOps (triggers from GitHub, Webhooks, Cloud events)
 - Use cases: trigger deployments on push, PR merge, image update
@@ -94,7 +94,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 9: Argo Notifications (Intermediate)](./09_Argo_Notifications/)
+## [Chapter 9: Argo Notifications (Intermediate)](./09_argocd_notifications/)
 
 - Notification system overview
 - Integrating with Slack, Microsoft Teams, Email
@@ -102,7 +102,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 10: Argo Image Updater (Advanced)](./10_Argo_Image_Updater/)
+## [Chapter 10: Argo Image Updater (Advanced)](./10_argocd_image_updater/)
 
 - What is Image Updater?
 - Automating image version updates in Git
@@ -110,7 +110,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 11: Monitoring the Argo Suite (Advanced)](./11_Monitoring_the_Argo_Suite/)
+## [Chapter 11: Monitoring the Argo Suite (Advanced)](./11_monitoring_the_argosuite/)
 
 - Observability with Prometheus + Grafana
 - Logs with Loki
@@ -121,7 +121,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 12: Security & Scaling (Advanced)](./12_Security_Scaling/)
+## [Chapter 12: Security & Scaling (Advanced)](./12_security_scaling/)
 
 - RBAC in ArgoCD (role-based access control)
 - SSO with Dex/OIDC (GitHub, Google, LDAP)
@@ -130,13 +130,13 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 13: Real-World End-to-End Project (Advanced)](./13_Real_World_End_to_End_Project/)
+## [Chapter 13: Real-World End-to-End Project (Advanced)](./13_real_world_end_to_end_project/)
 
 - K8s to prod application (https://youtu.be/Y8oFew4MfqA?si=lXheLSVcIbx8kFQT)
 
 ---
 
-## [Chapter 14: Interview Questions & Industry Use Cases (Mixed)](./14_Interview_Questions_Industry_Use_Cases/)
+## [Chapter 14: Interview Questions & Industry Use Cases (Mixed)](./14_interview_questions_industry_use_cases/)
 
 - Common Interview Q&A:
     - Difference between ArgoCD and Flux?
