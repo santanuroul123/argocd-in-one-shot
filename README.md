@@ -26,6 +26,7 @@ Below is complete syllabus for ArgoCD in One shot:
 - **Key ArgoCD Concepts:**
     - Application
     - Project
+    - Repositories
     - Health Status (Healthy, Degraded, Progressing, Missing)
     - Rollbacks
     - Auto-Healing (demo: delete pod → ArgoCD restores)
