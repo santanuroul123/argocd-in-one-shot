@@ -34,29 +34,7 @@ Before you begin, ensure you have:
 1. A **Kind cluster** running  
 2. **ArgoCD installed & running** (via Helm or manifests)
 3. ArgoCD CLI Installed and logged In  
-4. Git Repositories connected to ArgoCD
-
-    ![git-connection](../images/image.png)
-    
-4. Your **cluster added to ArgoCD**
-
-    a. You can do this using:
-
-    ```bash
-    argocd cluster add kind-argocd-cluster --name argocd-cluster --insecure
-    ```
-
-    b. Verify using:
-
-    ```bash
-    argocd cluster list
-    ```
-
-    You should see something like:
-
-    ![argocd-cluster](../images/image-1.png)
-
-5. `kubectl` installed to interact with your cluster
+4. `kubectl` installed to interact with your cluster
 
 ---
 
@@ -87,7 +65,42 @@ Login with:
 
 ---
 
-### 3. Create Application in ArgoCD UI
+### 3. Connect your Git Repository
+
+1. In ArgoCD UI, go to **Settings → Repositories**.
+2. Click **Connect Repo**.
+3. Fill in your Git repo details 
+    * **Repository URL**: `<add_url_of_forked_repo_of_argocd_demos>`
+    * **Username/Password**: (if private repo)
+4. Click **Connect**.
+
+You should see your repo listed under **Connected Repositories**.
+
+![git-connection](../images/image.png)    
+    
+
+### 4. Adding Cluster to ArgoCD server
+
+1. Run this command to your terminal:
+
+```bash
+argocd cluster add kind-argocd-cluster --name argocd-cluster --insecure
+```
+
+2. Verify using:
+
+```bash
+argocd cluster list
+```
+
+You should see something like this in ArgoCD Server:
+    
+![argocd-cluster](../images/image-1.png)
+    
+
+---
+
+### 5. Create Application in ArgoCD UI
 
 1. In ArgoCD UI, click **New App**.
 2. Fill the fields:
@@ -109,7 +122,7 @@ Login with:
 
 ---
 
-### 4. Sync the Application
+### 6. Sync the Application
 
 * The app will show as **OutOfSync**.
 * Click **Sync → Synchronize**.
@@ -123,7 +136,7 @@ Login with:
 
 ---
 
-### 5. Verify the Deployment
+### 7. Verify the Deployment
 
 From CLI:
 
@@ -139,7 +152,7 @@ You should see:
 
 ---
 
-### 6. Access Nginx via browser
+### 8. Access Nginx via browser
 
 1. Port-forward the NGINX service:
 
