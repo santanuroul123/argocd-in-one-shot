@@ -1,6 +1,6 @@
 # ArgoCD Setup and Installation
 
-Let's see how we can Setup & Install ArgoCD and access via the browser.
+Let's see how we can Setup & Install ArgoCD (UI and CLI) and access via the browser.
 
 ---
 
@@ -48,7 +48,7 @@ Before starting, ensure you have the following installed on your system:
 > 
 > You can either follow the below steps or directly run the script [setup_argocd.sh](./setup_argocd.sh)
 > 
-> The script will create **kind cluster** and **install ArgoCD** based on your choice (using HELM or manifest)
+> The script will create **kind cluster** and **Installs ArgoCD UI and CLI** based on your choice (using HELM or manifest)
 
 ---
 
@@ -184,6 +184,43 @@ Login with:
 
 * Username: `admin`
 * Password: (above output)
+
+---
+
+# Step 3: Install ArgoCD CLI (Ubuntu/Linux)
+
+ArgoCD server runs inside Kubernetes, but to interact with it from the terminal you need the **ArgoCD CLI (`argocd`)**.  
+This is separate from the server installation.
+
+### 1. Install ArgoCD CLI
+
+```bash
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
+```
+
+### 2. Verify installation
+
+```bash
+# Verify installation
+argocd version --client
+```
+
+### 3. Login to ArgoCD CLI
+
+```bash
+argocd login <instance_public_ip>:8080 --username admin --password <initial_password> --insecure
+```
+
+> Note: The --insecure flag is required when using port-forward with self-signed TLS certs.
+For production, you’d configure proper TLS certs (then --insecure is not needed).
+
+### 4. Get user info
+
+```bash
+argocd account get-user-info
+```
 
 ---
 
