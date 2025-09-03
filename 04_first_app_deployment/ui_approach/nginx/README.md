@@ -87,13 +87,21 @@ You should see your repo listed under **Connected Repositories**.
 
 ### 4. Adding Cluster to ArgoCD server
 
-1. Run this command to your terminal:
+1. Check your config contexts:
+
+```bash
+kubectl config get-contexts
+```
+
+Identify your cluster context (e.g., `kind-argocd-cluster`).
+
+2. Add the cluster to ArgoCD:
 
 ```bash
 argocd cluster add kind-argocd-cluster --name argocd-cluster --insecure
 ```
 
-2. Verify using:
+3. Verify using:
 
 ```bash
 argocd cluster list
