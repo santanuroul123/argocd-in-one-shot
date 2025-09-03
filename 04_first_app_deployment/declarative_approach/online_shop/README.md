@@ -30,7 +30,7 @@ Before you begin, ensure you have:
 
 ## Steps to Deploy Online Shop using Declarative Approach
 
-### 1. Open a new VSCode editor & Go to `online_shop` directory of that clonned `argocd-demos` repo
+### 1. Open a new VSCode editor & Go to `declarative_approach/online_shop` directory of that clonned `argocd-demos` repo
 
 ```bash
 cd argocd-demos/declarative_approach/online_shop
