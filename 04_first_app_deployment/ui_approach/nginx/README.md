@@ -70,14 +70,19 @@ Login with:
 
 1. In ArgoCD UI, go to **Settings → Repositories**.
 2. Click **Connect Repo**.
-3. Fill in your Git repo details 
+3. Choose your connection method:
+    * **HTTPS** (for public/private repos)
+4. Fill in your Git repo details 
+    * **Project**: default
     * **Repository URL**: `<add_url_of_forked_repo_of_argocd_demos>`
     * **Username/Password**: (if private repo)
-4. Click **Connect**.
+5. Click **Connect**.
+
+![connecting-repo](../output_images/image-7.png)
 
 You should see your repo listed under **Connected Repositories**.
 
-![git-connection](../images/image.png)    
+![git-connection](../output_images/image.png)    
     
 
 ### 4. Adding Cluster to ArgoCD server
@@ -94,16 +99,16 @@ argocd cluster add kind-argocd-cluster --name argocd-cluster --insecure
 argocd cluster list
 ```
 
-You should see something like this in ArgoCD Server:
+You should see something like this in ArgoCD Server: **Settings → Clusters**.
     
-![argocd-cluster](../images/image-1.png)
+![argocd-cluster](../output_images/image-1.png)
     
 
 ---
 
 ### 5. Create Application in ArgoCD UI
 
-1. In ArgoCD UI, click **New App**.
+1. In ArgoCD UI, Go to **Applications** and click **New App**.
 2. Fill the fields:
 
    * **App Name**: `nginx-app`
@@ -114,9 +119,9 @@ You should see something like this in ArgoCD Server:
    * **Cluster**: `<select_added_cluster_url>`
    * **Namespace**: `default`
 
-    ![application-form1](../images/image-2.png)
+    ![application-form1](../output_images/image-2.png)
 
-    ![application-form2](../images/image-3.png)
+    ![application-form2](../output_images/image-3.png)
 
 3. Leave Sync Policy as **Manual** for now.
 4. Click **Create**.
@@ -129,11 +134,11 @@ You should see something like this in ArgoCD Server:
 * Click **Sync → Synchronize**.
 * ArgoCD will apply `nginx_deployment.yml` and `nginx_svc.yml` into the `default` namespace.
 
-    ![outofsync](../images/image-4.png)
+    ![outofsync](../output_images/image-4.png)
 
 * After syncing, the status should change to **Synced** and **Healthy**.
 
-    ![synced-nginx](../images/image-5.png)
+    ![synced-nginx](../output_images/image-5.png)
 
 ---
 
@@ -150,6 +155,10 @@ You should see:
 
 * NGINX pods running (`nginx-deployment-xxxx`).
 * `nginx-service` of type ClusterIP exposing port 80.
+
+Something like this:
+
+![pod-svc-output](../output_images/image-8.png)
 
 ---
 
@@ -171,7 +180,49 @@ http://<EC2-Public-IP>:8081
 
 You should see the default NGINX welcome page.
 
-![nginx-welcome-page](../images/image-6.png)
+![nginx-welcome-page](../output_images/image-6.png)
+
+---
+
+## Testing
+
+### Make a Change in Git
+
+1. Open `nginx_deployment.yml` in your local repo.
+2. Change the replicas form 3 to 5
+
+```yaml
+spec:
+  replicas: 5  # Change this from 3 to 5
+``` 
+
+3. Commit and push the change to GitHub:
+
+```bash
+git add nginx_deployment.yml
+git commit -m "Increase replicas to 5"
+git push origin main
+```
+
+### Observe ArgoCD UI
+
+1. Go to ArgoCD UI, select `nginx-app`.
+2. You should see the app is **OutOfSync** again.
+3. Click **Sync → Synchronize** to apply the changes.
+4. After syncing, the status should change to **Synced** and **Healthy**.
+5. Verify the change:
+
+```bash
+kubectl get pods -n default
+```
+
+You should see 5 NGINX pods running now.
+
+![nginx-pod-5-running](../output_images/image-9.png)
+
+In your ArgoCD nginx-app you can see that from 3 to 5 pods are created:
+
+![nginx-app-5-pods](../output_images/image-10.png)
 
 ---
 
@@ -183,3 +234,5 @@ You should see the default NGINX welcome page.
   * UI is **imperative** → fast for demos.
   * Real GitOps requires **declarative Application CRDs in Git** (covered in later approaches).
 
+
+Happy Learning!

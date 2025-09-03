@@ -36,6 +36,13 @@ Below is complete syllabus for ArgoCD in One shot:
         - Sync Waves
         - Sync Hooks (PreSync, Sync, PostSync, SyncFail)
         - Flags (`-prune`, `-replace`, etc.)
+    - Sync Options
+        - Skip Schema Validation
+        - Auto-Create Namespace
+        - Prune Last
+        - Apply Out of Sync Only
+        - Respect Ignore Differences
+        - Server-Side Apply
 
 ---
 
