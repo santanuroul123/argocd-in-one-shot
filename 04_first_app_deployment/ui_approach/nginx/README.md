@@ -99,6 +99,16 @@ argocd cluster add kind-argocd-cluster --name argocd-cluster --insecure
 argocd cluster list
 ```
 
+> Note: Initially the status of cluster you will get "Unknown", no worry - it will become successful after deploying your first application on ArgoCD Server.
+
+> something like this you will get after your first app deployment, if you run `argocd cluster list`:
+
+```
+SERVER                          NAME            VERSION  STATUS      MESSAGE                                                  PROJECT
+https://172.31.19.178:33893     argocd-cluster  1.33     Successful
+https://kubernetes.default.svc  in-cluster               Unknown     Cluster has no applications and is not being monitored. 
+```
+
 You should see something like this in ArgoCD Server: **Settings → Clusters**.
     
 ![argocd-cluster](../output_images/image-1.png)
