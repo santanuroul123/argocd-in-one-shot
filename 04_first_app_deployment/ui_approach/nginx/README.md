@@ -36,6 +36,8 @@ Before you begin, ensure you have:
 3. ArgoCD CLI Installed and logged In  
 4. `kubectl` installed to interact with your cluster
 
+> Follow this to get above things done: [ArgoCD Setup & Installation](../../../03_setup_installation/README.md)
+
 ---
 
 ## Steps to Deploy NGINX using ArgoCD UI
