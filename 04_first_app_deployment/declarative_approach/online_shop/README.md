@@ -233,6 +233,8 @@ kubectl delete pod -l app=online-shop -n default
 
     ![argocd-pod-recreate](../output_images/image-8.png)
 
+    ![argocd-pod-recreate-ui](../output_images/image-10.png)
+
 
 #### b) Scale deployment manually
 
