@@ -246,7 +246,7 @@ In your ArgoCD, in `nginx-app` you can see that pods are created from 3 to 5:
 
 ## Destroy 
 
-For complete destroy, you can directly deleter the cluster by using below command:
+For complete destroy, you can directly delete the cluster by using below command:
 
 ```bash
 kind delete cluster --name argocd-cluster
