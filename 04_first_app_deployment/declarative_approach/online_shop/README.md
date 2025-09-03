@@ -226,7 +226,13 @@ kubectl delete pod -l app=online-shop -n default
 ```
 
 * Pod disappears → ReplicaSet recreates it.
-* ArgoCD briefly shows **Degraded → Healthy** while reconciling.
+
+    ![pod-recreating](../output_images/image-7.png)
+
+* ArgoCD briefly shows **Progressing → Healthy** while reconciling.
+
+    ![argocd-pod-recreate](../output_images/image-8.png)
+
 
 #### b) Scale deployment manually
 
@@ -244,6 +250,8 @@ kubectl get pods -n default
 ```
 
 ArgoCD restores the replica count to match Git.
+
+  ![argocd-selfheal](../output_images/image-9.png)
 
 ---
 
