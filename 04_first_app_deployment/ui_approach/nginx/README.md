@@ -33,6 +33,8 @@ Before you begin, ensure you have:
 
 ### 1. Open a new VSCode editor & Go to `ui_approach/nginx` directory of that clonned `argocd-demos` repo
 
+Just for manifest files, or making changes or pushing it to git - used while testing all approaches.
+
 ```bash
 cd argocd-demos/ui_approach/nginx
 ````
