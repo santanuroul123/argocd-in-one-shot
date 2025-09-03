@@ -50,7 +50,7 @@ declarative_approach/online_shop
 
 ---
 
-### 2. Add Your Cluster to ArgoCD (if not already added)
+### 2. Add Your Cluster to ArgoCD
 
 Check your contexts:
 
@@ -76,12 +76,6 @@ argocd cluster list
 
 ### 3. Review the Application CRD
 
-Here’s a polished and **completed version** of that section 👇
-
----
-
-### 3. Review the Application CRD
-
 The **Application CRD** is nothing but the **YAML manifest** of an ArgoCD application.
 When we create an application from the **UI** or **CLI**, ArgoCD generates this CRD in the cluster automatically.
 
@@ -99,7 +93,7 @@ This has several advantages:
 
 In short:
 
-> The Application CRD makes your application definitions **declarative**, ensuring they are part of your GitOps workflow — unlike UI or CLI, which are **imperative**.
+> The Application CRD makes your application definitions **declarative**, ensuring they are part of your GitOps workflow - unlike UI or CLI, which are **imperative**.
 
 
 
@@ -129,6 +123,7 @@ spec:
 ```
 
 Replace `<your-username>` with your GitHub username.
+
 Replace `<argocd_cluster_server_url>` with the server URL from `argocd cluster list`.
 
 ---
