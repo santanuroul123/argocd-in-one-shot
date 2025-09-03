@@ -16,8 +16,7 @@ cat > $KIND_CONFIG <<EOF
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 networking:
-  # Change this to your EC2 private IP (run 172.31.19.178 172.18.0.1 172.17.0.1 fc00:f853:ccd:e793::1  to check)
-  apiServerAddress: "172.31.19.178"
+  apiServerAddress: "172.31.19.178"  # Change this to your EC2 private IP (run "hostname -I" to check or from your EC2 dashboard)
   apiServerPort: 33893
 nodes:
   - role: control-plane
