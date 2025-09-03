@@ -60,7 +60,7 @@ Save your cluster config as `kind-config.yaml`:
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 networking:
-  # Change this to your EC2 private IP (run 172.31.19.178 172.18.0.1 172.17.0.1 fc00:f853:ccd:e793::1  to check)
+  # Change this to your EC2 private IP (run "hostname -I" to check)
   apiServerAddress: "172.31.19.178"
   apiServerPort: 33893
 nodes:
