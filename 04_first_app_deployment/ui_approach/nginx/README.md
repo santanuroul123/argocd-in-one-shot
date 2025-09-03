@@ -5,17 +5,6 @@ We’ll use a simple **NGINX Deployment + Service** to understand how ArgoCD man
 
 ---
 
-## 📂 Directory Structure
-```
-
-ui_approach/nginx
-├── nginx_deployment.yml
-└── nginx_svc.yml
-
-````
-
----
-
 ## Theory
 
 - In the **UI approach**, we create applications directly from the ArgoCD dashboard.  
@@ -48,6 +37,16 @@ Before you begin, ensure you have:
 git clone https://github.com/Amitabh-DevOps/argocd-demos.git
 cd argocd-demos/ui_approach/nginx
 ````
+
+## 📂 Directory Structure
+
+```
+
+ui_approach/nginx
+├── nginx_deployment.yml
+└── nginx_svc.yml
+
+```
 
 ---
 
