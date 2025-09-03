@@ -14,13 +14,13 @@ Each method has its use cases, but only the **Declarative approach** aligns with
 
 1. First Fork it into your GitHub Account:
 
-   Go to:
+   Go to below url, and fork it:
 
       ```bash
       https://github.com/Amitabh-DevOps/argocd-demos.git
       ```
 
-2. Clonned it, into your local system
+2. Clonned it, into your Local system
 
       ```bash
       git clone https://github.com/<your-username>/argocd-demos.git
