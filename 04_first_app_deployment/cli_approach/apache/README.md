@@ -126,6 +126,18 @@ argocd app create apache-app \
 * Replace `<your-username>` with your GitHub username.
 * Replace `<your_added_cluster_url>` with the cluster you registered (e.g., `https://172.31.xx.xx:port` or `https://kubernetes.default.svc`).
 
+
+#### Explanation of Flags
+
+  - --repo → Git repo with your manifests.
+  - --path → Path in repo where manifests live (manifests/).
+  - --dest-server → Target cluster (inside ArgoCD, e.g: https://kubernetes.default.svc = in-cluster).
+  - --dest-namespace → Namespace to deploy (e.g., default).
+  - --sync-policy automated → Auto-sync enabled.
+  - --self-heal → Fix drift if someone changes/deletes resources manually.
+  - --auto-prune → Remove resources if they’re deleted from Git.
+
+
 Verify the app creation:
 
 ```bash
