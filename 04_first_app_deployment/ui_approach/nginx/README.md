@@ -199,7 +199,7 @@ You should see the default NGINX welcome page.
 ### Make a Change in Git
 
 1. Open `nginx_deployment.yml` in your local repo.
-2. Change the replicas form 3 to 5
+2. Change the replicas from 3 to 5
 
 ```yaml
 spec:
