@@ -31,13 +31,15 @@ Before you begin, ensure you have:
 
 ## Steps to Deploy NGINX using ArgoCD UI
 
-### 1. Open a new VSCode editor & Go to `ui_approach/nginx` directory of that clonned `argocd-demos` repo
+### 1. Open a new VSCode editor & Open that `argocd-demos` repo that you had clonned
 
 Just for manifest files, or making changes or pushing it to git - used while testing all approaches.
 
-```bash
-cd argocd-demos/ui_approach/nginx
-````
+In below directory you can see the related manifest files:
+
+    ```bash
+    cd argocd-demos/ui_approach/nginx
+    ```
 
 ---
 
