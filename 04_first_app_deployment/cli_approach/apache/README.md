@@ -255,7 +255,33 @@ kubectl get pods -n default
 
 Now 4 Apache pods should be running.
 
-![apche-4-pod-running](../output_images/image-4.png)
+![apache-4-pod-running](../output_images/image-4.png)
+
+---
+
+## Common ArgoCD CLI Commands
+
+Here are some frequently used argocd commands with their descriptions:
+
+| Command                                                                   | Description                                          |
+| ------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `argocd login <host>:<port> --username admin --password <pwd> --insecure` | Log in to the ArgoCD API server                      |
+| `argocd account get-user-info`                                            | Show info about the currently logged-in user         |
+| `argocd cluster list`                                                     | List all clusters registered with ArgoCD             |
+| `argocd cluster add <context-name>`                                       | Add a Kubernetes cluster from kubeconfig to ArgoCD   |
+| `argocd repo list`                                                        | List connected Git repositories                      |
+| `argocd repo add <repo-url>`                                              | Connect a Git repo to ArgoCD                         |
+| `argocd app list`                                                         | List all ArgoCD applications                         |
+| `argocd app create <app-name> --repo <url> --path <dir> ...`              | Create a new ArgoCD application                      |
+| `argocd app get <app-name>`                                               | Get details of an application (status, sync, health) |
+| `argocd app sync <app-name>`                                              | Synchronize (deploy) an application                  |
+| `argocd app delete <app-name>`                                            | Delete an application from ArgoCD                    |
+| `argocd app rollback <app-name> <revision>`                               | Rollback an application to a previous revision       |
+| `argocd app set <app-name> --sync-policy automated`                       | Update app settings (e.g., enable auto-sync)         |
+| `argocd logout <host>`                                                    | Logout from ArgoCD server                            |
+
+
+> Tip: You can always run `argocd <command> --help` to see detailed usage and flags.
 
 ---
 
