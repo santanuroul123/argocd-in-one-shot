@@ -20,7 +20,7 @@ Each method has its use cases, but only the **Declarative approach** aligns with
       https://github.com/Amitabh-DevOps/argocd-demos.git
       ```
 
-2. Clonned it, into your Local system
+2. Then clone it, into your Local system
 
       ```bash
       git clone https://github.com/<your-username>/argocd-demos.git
