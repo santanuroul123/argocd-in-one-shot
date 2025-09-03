@@ -30,10 +30,9 @@ Before you begin, ensure you have:
 
 ## Steps to Deploy Online Shop using Declarative Approach
 
-### 1. Fork and Clone the Repo
+### 1. Open a new VSCode editor & Go to `online_shop` directory of that clonned `argocd-demos` repo
 
 ```bash
-git clone https://github.com/Amitabh-DevOps/argocd-demos.git
 cd argocd-demos/declarative_approach/online_shop
 ````
 
@@ -97,7 +96,7 @@ In short:
 
 
 
-**online_shop_app.yml**
+Create or apply **online_shop_app.yml**
 
 ```yaml
 

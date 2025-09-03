@@ -10,7 +10,7 @@ Each method has its use cases, but only the **Declarative approach** aligns with
 
 ---
 
-## Fork and Clone this Git Repository
+## Fork and Clone this Git Repository into local system
 
 ```bash
 git clone https://github.com/Amitabh-DevOps/argocd-demos.git
