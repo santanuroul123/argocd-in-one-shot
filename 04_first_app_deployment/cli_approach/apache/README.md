@@ -106,8 +106,6 @@ Verify:
 argocd cluster list
 ```
 
-> ⚠️ Note: If you already added the cluster in the UI approach, you can reuse it here.
-
 ---
 
 ### 4. Create Application via CLI
@@ -141,7 +139,7 @@ NAME               CLUSTER                      NAMESPACE  PROJECT  STATUS  HEAL
 argocd/apache-app  https://172.31.19.178:33893  default    default  Synced  Healthy  Auto-Prune  <none>      https://github.com/Amitabh-DevOps/argocd-demos.git  cli_approach/apache 
 ```
 
-and UI you can check it is creating:
+and in UI, you can check it is creating:
 
 ![apache-app-creating](../output_images/image-5.png)
 
