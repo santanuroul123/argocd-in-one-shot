@@ -35,10 +35,9 @@ Before you begin, ensure you have:
 
 ## Steps to Deploy Apache using ArgoCD CLI
 
-### 1. Fork and Clone the Repo
+### 1. Open a new VSCode editor & Go to `apache` directory of that clonned `argocd-demos` repo
 
 ```bash
-git clone https://github.com/Amitabh-DevOps/argocd-demos.git
 cd argocd-demos/cli_approach/apache
 ````
 
