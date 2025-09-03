@@ -38,7 +38,7 @@ git clone https://github.com/Amitabh-DevOps/argocd-demos.git
 cd argocd-demos/ui_approach/nginx
 ````
 
-## 📂 Directory Structure
+### 📂 Directory Structure
 
 ```
 
