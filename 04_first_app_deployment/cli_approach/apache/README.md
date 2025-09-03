@@ -285,6 +285,16 @@ Here are some frequently used argocd commands with their descriptions:
 
 ---
 
+## Destroy 
+
+For complete destroy, you can directly deleter the cluster by using below command:
+
+```bash
+kind delete cluster --name argocd-cluster
+```
+
+---
+
 ## Wrap-Up
 
 * You successfully deployed an app via **ArgoCD CLI**.
