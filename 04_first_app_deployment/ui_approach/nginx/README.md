@@ -230,7 +230,7 @@ You should see 5 NGINX pods running now.
 
 ![nginx-pod-5-running](../output_images/image-9.png)
 
-In your ArgoCD nginx-app you can see that from 3 to 5 pods are created:
+In your ArgoCD, in `nginx-app` you can see that pods are created from 3 to 5:
 
 ![nginx-app-5-pods](../output_images/image-10.png)
 
