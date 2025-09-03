@@ -10,30 +10,19 @@ Each method has its use cases, but only the **Declarative approach** aligns with
 
 ---
 
-## 📂 Directory Structure
+## Fork and Clone this Git Repository
 
+```bash
+git clone https://github.com/Amitabh-DevOps/argocd-demos.git
 ```
 
-chapter4-first-app-deployment/
-├── ui_approach/
-│   └── nginx/
-│       ├── nginx_deployment.yml
-│       └── nginx_svc.yml
-│
-├── cli_approach/
-│   └── apache/
-│       ├── apache_deployment.yml
-│       └── apache_svc.yml
-│
-└── declarative_approach/
-    └── online_shop/
-        └── online-shop-app.yml
-
-```
+This repo contains the manifest files that are need to apply all three approaches
 
 ---
 
 ##  Learning Paths
+
+We will explore three different methods to deploy applications using ArgoCD. Each method has its own advantages and is suited for different scenarios.
 
 👉 Click below to explore each approach step by step:
 
@@ -55,9 +44,9 @@ chapter4-first-app-deployment/
 
 | Approach       | How App is Created | Where Config Lives | Best For | Limitations |
 |----------------|-------------------|--------------------|----------|-------------|
-| **UI** (NGINX) | Create app via **ArgoCD Dashboard** | In **Cluster only** | Quick demos, beginners | Not reproducible, not version-controlled |
-| **CLI** (Apache) | `argocd app create ...` via **CLI** | In **Cluster only** | Operators, admins, testing | Still imperative, config not in Git |
-| **Declarative** (Online Shop) | Apply **Application CRD YAML** | In **Git + Cluster** | Real GitOps, production, teams | Initial setup effort needed |
+| **UI** (NGINX) | Create app via **ArgoCD Dashboard** | In **Cluster only** | Learning, demos, POCs | Not reproducible, not version-controlled |
+| **CLI** (Apache) | `argocd app create ...` via **CLI** | In **Cluster only** | Operators, quick scripting | Still imperative, config not in Git |
+| **Declarative** (Online Shop) | Apply **Application CRD YAML** | In **Git + Cluster** | Production, teams, real GitOps | Initial setup effort needed |
 
 ---
 
