@@ -19,35 +19,6 @@ These include **Projects, App of Apps, Multi-cluster management, ApplicationSets
 
 ---
 
-## 📂 Directory Structure
-
-```
-05_argocd_features/
-├── projects/
-│   └── project.yaml
-│
-├── app_of_apps/
-│   ├── root-app.yaml
-│   ├── nginx-app.yaml
-│   ├── apache-app.yaml
-│   └── online-shop-app.yaml
-│
-├── multicluster/
-│   └── multi-cluster-app.yaml
-│
-├── applicationsets/
-│   ├── list-generator.yaml
-│   ├── cluster-generator.yaml
-│   └── git-generator.yaml
-│
-└── config_management/
-    ├── helm-app.yaml
-    ├── kustomize-app.yaml
-    └── jsonnet-app.yaml
-```
-
----
-
 ## Hands-On Learning Paths
 
 👉 Click below to explore each feature with examples:
