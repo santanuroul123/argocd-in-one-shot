@@ -51,6 +51,8 @@ Projects can have multiple roles, and those roles can have different access gran
 
 **project.yml**
 
+You can remove the comments while trying - using ChatGPT, it is just for your understanding:
+
 ```yaml
 apiVersion: argoproj.io/v1alpha1 # API version for ArgoCD Projects
 kind: AppProject               # Kind is always AppProject for Projects
@@ -79,6 +81,7 @@ spec:
 ```
 
 > Replace `<your-username>` with your GitHub username.
+
 > Replace `<added_argocd_cluster_server_url>` with the server URL of the cluster you added to ArgoCD (you can find it in ArgoCD UI under Settings → Clusters or by running command `argocd cluster list`).
 
 ---
@@ -120,7 +123,9 @@ frontend-team  Project for frontend team apps  https://172.31.19.178:33893,front
 
 ### 4. Create an Application Under the Project
 
-Example `nginx_app.yml`:
+`nginx_app.yml`:
+
+You can remove the comments while trying - using ChatGPT, it is just for your understanding:
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1 # ArgoCD Application resource
@@ -146,6 +151,7 @@ spec:
 ```
 
 > Replace `<your-username>` with your GitHub username.
+
 > Replace `<added_argocd_cluster_server_url>` with the server URL of the cluster you added to ArgoCD.
 
 ---
