@@ -74,9 +74,8 @@ spec:
     - name: frontend-admins    # Role name  
       description: Admins for frontend team
       policies:                # Policies associated with this role
+        # syntax: - p, proj:<project-name>:<role-name>, applications, <action>, <project>/<app-name>, permission(allow|deny)
         - p, proj:frontend-team:frontend-admins, applications, *, frontend-team/*, allow  # Full access to all apps in this Project, Here p = policy, proj = project, applications = resource, * = action (all actions), frontend-team/* = resource name pattern, allow = effect (allow or deny)
-      groups:
-        - frontend-admins-group  # Map this role to an external group 
 ```
 
 > Replace `<your-username>` with your GitHub username.

@@ -6,11 +6,11 @@ metadata:                        # Metadata section
 spec:
   project: frontend-team        # Assigns app to the frontend-team Project
   source:
-    repoURL: https://github.com/Amitabh-DevOps/argocd-demos.git  # Git repo
+    repoURL: https://github.com/<your-username>/argocd-demos.git  # Git repo
     targetRevision: main        # Branch to watch
     path: ui_approach/nginx     # Path in repo with manifests
   destination:
-    server: https://172.31.19.178:33893  # Target cluster
+    server: <added_argocd_cluster_server_url>  # Target cluster
     namespace: frontend          # Namespace inside that cluster
   syncPolicy:                    # Sync policy settings
     automated:                   # Enable automated sync
@@ -18,4 +18,3 @@ spec:
       selfHeal: true              # Correct drift if resources change in cluster
     syncOptions:                 # Additional sync options
       - CreateNamespace=true      # Auto-create namespace if it doesn't exist
-
