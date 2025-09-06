@@ -35,26 +35,7 @@ In this section, we’ll explore the **App of Apps pattern**, a powerful techniq
 
 **root_app.yml** defines the parent application:
 
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: root-app
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/<your-username>/argocd-demos.git
-    targetRevision: main
-    path: 05_argocd_features/app_of_apps/apps
-  destination:
-    server: <argocd_cluster_server_url>
-    namespace: argocd
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-```
+Use [root_app.yml](root_app.yml)
 
 Replace `<your-username>` with your GitHub username.
 
@@ -63,6 +44,8 @@ Replace `<argocd_cluster_server_url>` with your ArgoCD added cluster server URL,
 ---
 
 ### 2. Apply the Root Application
+
+Create the `root_app.yml` file by adding required Application CRD manifest and apply:
 
 ```bash
 kubectl apply -f root_app.yml -n argocd
@@ -74,6 +57,8 @@ kubectl apply -f root_app.yml -n argocd
 
 * Go to **ArgoCD UI → Applications**.
 * You’ll see `root-app`.
+    
+    ![app-of-app](output_images/image-11.png)
 
     ![app-of-app-ui](output_images/image-1.png)
 
@@ -111,7 +96,7 @@ argocd/online-shop-child  https://172.31.19.178:33893  default    default  OutOf
 argocd/root-app           https://172.31.19.178:33893  argocd     default  Synced     Healthy  Auto-Prune  <none>                    https://github.com/Amitabh-DevOps/argocd-demos.git  app_of_apps/apps
 ```
 
-> Note `online-shop-app` is created because in `argocd-demos` repo we already have Appliation CRD for online-shop in declarative approach, that why with the help of true gitops it created that also.
+> Note `online-shop-app` is created because in `argocd-demos` repo we already have Appliation CRD for online-shop in declarative approach, that's why with the help of true gitops it created that also.
 
 ---
 
@@ -121,7 +106,7 @@ argocd/root-app           https://172.31.19.178:33893  argocd     default  Synce
 * Commit & push.
 * Sync `root-app` → it will propagate changes to all child apps.
 
-I have changed replicas of online-shop deployment from 5 to 3 and it works:
+I have changed the replicas of `online-shop` deployment from 5 to 3 and it works:
 
   ![online-shop-3-replicas](output_images/image-5.png)
 
@@ -146,7 +131,7 @@ Run this command to get services running:
 kubectl get svc
 ```
 
-You should see services for all three apps:
+You should see services for all three child:
 
   ![all-child-svc](output_images/image-7.png)
 
