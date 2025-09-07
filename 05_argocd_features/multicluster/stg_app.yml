@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apache-stg
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Amitabh-DevOps/argocd-demos.git
+    targetRevision: main
+    path: cli_approach/apache      # Path to apache manifests
+  destination:
+    server: https://172.31.19.178:33893  # from `argocd cluster list`
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
