@@ -52,6 +52,9 @@ nodes:
     image: kindest/node:v1.33.1
 ```
 
+> Why apiServerAddress & apiServerPort in kind config?
+→ To ensure each kind cluster API server is reachable from the ArgoCD pods. This avoids conflicts (since kind defaults to random localhost ports).
+
 Create clusters:
 
 ```bash
@@ -292,6 +295,8 @@ Access: [http://<instance_public_ip>:3000](http://<instance_public_ip>:3000)
   * **Stage** → Apache app.
   * **Prod** → Online-shop.
   * **ArgoCD control plane** runs separately in **kind-argocd-cluster**.
+  * All managed from a single ArgoCD UI.
+* In real-world multi-cluster, ArgoCD is often installed in a management cluster and connects to remote clusters over VPN/peering.
 
 This is the essence of **multi-cluster GitOps** 
 
