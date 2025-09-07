@@ -73,6 +73,9 @@ nodes:
     image: kindest/node:v1.33.1
 ```
 
+> Why `apiServerAddress` & `apiServerPort` in kind config?
+→ To ensure each kind cluster API server is reachable from the ArgoCD pods. This avoids conflicts (since kind defaults to random localhost ports).
+
 Create the cluster:
 
 ```bash
