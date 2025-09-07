@@ -43,7 +43,7 @@ Projects can have multiple roles, and those roles can have different access gran
 * `kubectl` and `argocd` CLI configured to interact with your ArgoCD instance.
 * Cluster added to ArgoCD server (as we done in chapter 4)
 
-> Follow this to get above things done: [ArgoCD Setup & Installation](../../../03_setup_installation/README.md)
+> Follow this to get above things done: [ArgoCD Setup & Installation](../../03_setup_installation/README.md)
 
 ---
 

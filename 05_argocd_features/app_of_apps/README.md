@@ -28,7 +28,7 @@ In this section, we’ll explore the **App of Apps pattern**, a powerful techniq
 * `argocd` CLI installed and configured.
 * A kind cluster added to ArgoCD (as we done till now)
 
-> Follow this guide to set up ArgoCD: [ArgoCD Setup & Installation](../../../03_setup_installation/README.md)  
+> Follow this guide to set up ArgoCD: [ArgoCD Setup & Installation](../../03_setup_installation/README.md)
 
 
 ### 1. Review the Root Application
