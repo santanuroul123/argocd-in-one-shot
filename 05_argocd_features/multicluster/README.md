@@ -122,7 +122,7 @@ And in ArgoCD server, in **Settings** -> **Clusters** you will see:
 
 ### 3. Create Application for `in-cluster` Cluster (Nginx)
 
-**dev_app.yml**
+**dev_app.yml:**
 
 Use: [dev_app.yml](dev_app.yml)
 
@@ -138,7 +138,7 @@ kubectl apply -f dev_app.yml -n argocd
 
 ### 4. Create Application for `argocd-cluster` Cluster (Apache)
 
-**stg_app.yml**
+**stg_app.yml:**
 
 Use: [stg_app.yml](stg_app.yml)
 
@@ -157,7 +157,7 @@ kubectl apply -f stg_app.yml -n argocd
 
 ### 5. Create application for Prod Cluster (Online-shop)
 
-**prod_app.yml**
+**prod_app.yml:**
 
 Use: [prod_app.yml](prod_app.yml)
 
@@ -215,7 +215,7 @@ argocd/nginx-dev         https://kubernetes.default.svc  default    default  Syn
 argocd/online-shop-prod  https://172.31.19.178:33894     default    default  Synced  Healthy  Auto-Prune  <none>      https://github.com/Amitabh-DevOps/argocd-demos.git  multicluster/online-shop  main
 ```
 
-Check resources in dev cluster:
+Check resources in `in-cluster` (dev cluster):
 
 ```bash
 kubectl get pods,svc -n default
@@ -225,7 +225,7 @@ kubectl get pods,svc -n default
 
 > Note: it is `in-cluster`(Default ArgoCD Cluster), that's why we are not using `--context`.
 
-Check resources in stg cluster:
+Check resources in `argocd-cluster` (stg cluster):
 
 ```bash
 kubectl --context kind-argocd-cluster get pods,svc -n default
@@ -233,7 +233,7 @@ kubectl --context kind-argocd-cluster get pods,svc -n default
 
   ![argocd-cluster-resources](output_images/image-7.png)
 
-Check resources in prod cluster:
+Check resources in `prod-kind` (prod cluster):
 
 ```bash
 kubectl --context kind-prod-kind get pods,svc -n default
@@ -255,7 +255,7 @@ Port-forward from host machine:
 kubectl port-forward svc/nginx-service 8081:80 --address=0.0.0.0 &
 ```
 
-Access: [http://<instance_public_ip>](http://<instance_public_ip>)8081
+Access: [http://<instance_public_ip>:8081](http://<instance_public_ip>:8081)
 
   ![nginx-app](output_images/image-8.png)
 
@@ -265,7 +265,7 @@ Access: [http://<instance_public_ip>](http://<instance_public_ip>)8081
 kubectl --context kind-argocd-cluster port-forward svc/apache-service 8082:80 --address=0.0.0.0 &
 ```
 
-Access: [http://<instance_public_ip>](http://<instance_public_ip>):8082
+Access: [http://<instance_public_ip>:8082](http://<instance_public_ip>:8082)
 
   ![apache-app](output_images/image-9.png)
 
@@ -275,7 +275,7 @@ Access: [http://<instance_public_ip>](http://<instance_public_ip>):8082
 kubectl --context kind-prod-kind port-forward svc/online-shop-service 3000:3000 --address=0.0.0.0 &
 ```
 
-Access: [http://<instance_public_ip>](http://<instance_public_ip>):3000
+Access: [http://<instance_public_ip>:3000](http://<instance_public_ip>:3000)
 
   ![online-shop-app](output_images/image-10.png)
 
