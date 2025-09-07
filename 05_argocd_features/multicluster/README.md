@@ -34,7 +34,7 @@ And we will use like:
 - `argocd` CLI installed and logged in.
 - `kubectl` CLI installed and configured.
 
-> Follow this guide to set up ArgoCD: [ArgoCD Setup & Installation](../../../03_setup_installation/README.md)  
+> Follow this guide to set up ArgoCD: [ArgoCD Setup & Installation](../../03_setup_installation/README.md) 
 
 ### 1. Create Prod Cluster
 
@@ -122,7 +122,7 @@ And in ArgoCD server, in **Settings** -> **Clusters** you will see:
 
 ### 3. Create Application for `in-cluster` Cluster (Nginx)
 
-**dev_app.yml:**
+**dev_app.yml** :
 
 Use: [dev_app.yml](dev_app.yml)
 
@@ -138,7 +138,7 @@ kubectl apply -f dev_app.yml -n argocd
 
 ### 4. Create Application for `argocd-cluster` Cluster (Apache)
 
-**stg_app.yml:**
+**stg_app.yml** : 
 
 Use: [stg_app.yml](stg_app.yml)
 
@@ -157,7 +157,7 @@ kubectl apply -f stg_app.yml -n argocd
 
 ### 5. Create application for Prod Cluster (Online-shop)
 
-**prod_app.yml:**
+**prod_app.yml** : 
 
 Use: [prod_app.yml](prod_app.yml)
 
