@@ -38,7 +38,7 @@ In below directory you can see the related manifest files:
 
   ```bash
   cd argocd-demos/declarative_approach/online_shop
-  ````
+  ```
 
 ---
 
@@ -122,7 +122,6 @@ spec:
     automated:                     # Enable auto-sync
       prune: true                  # Delete resources removed from Git
       selfHeal: true               # Fix drift if resources are changed manually
-    
 ```
 
 Replace `<your-username>` with your GitHub username.
