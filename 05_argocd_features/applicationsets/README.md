@@ -110,7 +110,7 @@ This will deploy **chai-app** into **all clusters** registered in ArgoCD.
     argocd app list
     ```
 
-    You you something like: 
+    You will get something like: 
 
     ```bash
     NAME                     CLUSTER                         NAMESPACE  PROJECT  STATUS  HEALTH   SYNCPOLICY  CONDITIONS  REPO                                                PATH                      TARGET
@@ -184,14 +184,6 @@ For now, we will use `in-cluster` and `argocd-cluster`(Where ArgoCD is deployed)
     kubectl config get-contexts
     ```
 
-    Run `argocd appset list`:
-
-    ```bash
-    NAME                 PROJECT  SYNCPOLICY  CONDITIONS                                                                                                                                 
-                                                                                                        REPO                                                PATH                      TARGET
-    argocd/demo-cluster  default  nil         [{ParametersGenerated Successfully generated parameters for all Applications 2025-09-08 10:26:24 +0000 UTC True ParametersGenerated} {ResourcesUpToDate ApplicationSet up to date 2025-09-08 10:26:24 +0000 UTC True ApplicationSetUpToDate}]  https://github.com/Amitabh-DevOps/argocd-demos.git  applicationsets/chai-app  main
-    ```
-
 2. Add it to ArgoCD Cluster:
 
     ```bash
@@ -210,6 +202,14 @@ For now, we will use `in-cluster` and `argocd-cluster`(Where ArgoCD is deployed)
 
     ```bash
     kubectl apply -f cluster_generator.yml -n argocd
+    ```
+
+    Run `argocd appset list`:
+
+    ```bash
+    NAME                 PROJECT  SYNCPOLICY  CONDITIONS                                                                                                                                 
+                                                                                                        REPO                                                PATH                      TARGET
+    argocd/demo-cluster  default  nil         [{ParametersGenerated Successfully generated parameters for all Applications 2025-09-08 10:26:24 +0000 UTC True ParametersGenerated} {ResourcesUpToDate ApplicationSet up to date 2025-09-08 10:26:24 +0000 UTC True ApplicationSetUpToDate}]  https://github.com/Amitabh-DevOps/argocd-demos.git  applicationsets/chai-app  main
     ```
 
 2. Verify in ArgoCD UI:
