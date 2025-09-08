@@ -43,7 +43,7 @@ These include **Projects, App of Apps, Multi-cluster management, ApplicationSets
    * Generate multiple applications dynamically
    * List, Git, and Cluster generators demo
 
-5. [Config Management Tools](./config_management/README.md)
+5. [Config Management Tools](./config_management/README.md)  -  have to add in this chapter
 
    * Deploy apps using Helm charts
    * Manage environment-specific configs with Kustomize
