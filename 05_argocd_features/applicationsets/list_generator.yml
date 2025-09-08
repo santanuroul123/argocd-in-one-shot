@@ -22,7 +22,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/Amitabh-DevOps/argocd-demos.git
+        repoURL: https://github.com/<your-username>/argocd-demos.git
         targetRevision: main
         path: '{{path}}'                # resolved from element
       destination:

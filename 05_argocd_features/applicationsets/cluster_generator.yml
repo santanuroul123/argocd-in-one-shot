@@ -14,7 +14,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/Amitabh-DevOps/argocd-demos.git
+        repoURL: https://github.com/<your-username>/argocd-demos.git
         targetRevision: main
         path: applicationsets/chai-app    # same app deployed to all clusters
       destination:
