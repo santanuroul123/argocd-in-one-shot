@@ -335,9 +335,9 @@ For now, we will use `in-cluster` and `argocd-cluster`(Where ArgoCD is deployed)
 
 | Generator Type        | How it Works                                                            | Best Use Case                                                           | Example Outcome                                                        |
 | --------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| **List Generator**    | You define a static list of apps (name + path).                         | Simple multi-app deployments where the set of apps is known in advance. | `nginx-list`, `apache-list` created from a single manifest.            |
-| **Cluster Generator** | Iterates over all clusters registered in ArgoCD (`argocd cluster add`). | Deploying the same app across multiple clusters (e.g., Dev, Stg, Prod). | Online Shop automatically deployed to all clusters.                    |
-| **Git Generator**     | Scans Git repo for folders or manifests, creates an app per folder.     | Microservices or monorepos where each folder = one app.                 | Apps auto-created for `ui_approach/nginx`, `cli_approach/apache`, etc. |
+| **List Generator**    | You define a static list of apps (name + path).                         | Simple multi-app deployments where the set of apps is known in advance. | `nginx-list`, `apache-list` and `chaiapp-list` created from a single manifest.            |
+| **Cluster Generator** | Iterates over all clusters registered in ArgoCD (`argocd cluster add`). | Deploying the same app across multiple clusters (e.g., Dev, Stg, Prod). | Chai-App automatically deployed to all clusters.                    |
+| **Git Generator**     | Scans Git repo for folders or manifests, creates an app per folder.     | Microservices or monorepos where each folder = one app.                 | Apps auto-created for `git_generator/apache`, `git_generator/online-shop` and `git_generator/chai-app`, etc. |
 
 
 ---
