@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1           # API version for Argo Rollouts
+kind: Rollout                              # Resource type is Rollout
+metadata:
+  name: nginx-canary                       # Name of the rollout
+  namespace: default                       # Namespace where rollout is deployed
+spec:
+  replicas: 3                              # Number of desired pod replicas
+  strategy:
+    canary:                                # Use canary deployment strategy
+      steps:
+      - setWeight: 20                      # Shift 20% traffic to new version
+      - pause: {duration: 10}              # Pause for 10 seconds
+      - setWeight: 50                      # Shift 50% traffic to new version
+      - pause: {duration: 10}              # Pause for 10 seconds
+      - setWeight: 80                      # Shift 80% traffic to new version
+      - pause: {duration: 10}              # Pause for 10 seconds
+      - setWeight: 100                     # Shift 100% traffic to new version
+  selector:
+    matchLabels:
+      app: nginx-canary                    # Select pods with this label
+  template:
+    metadata:
+      labels:
+        app: nginx-canary                  # Label for pods created by this rollout
+    spec:
+      containers:
+      - name: nginx                        # Name of the container
+        image: nginx:1.19                  # Container image to deploy
+        ports:
+        - containerPort: 80                # Expose port 80 in the container

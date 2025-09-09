@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-active         # must match Rollout.spec.strategy.blueGreen.activeService
+  labels:
+    app: nginx-bluegreen-svc
+spec:
+  selector:
+    app: nginx-bluegreen     # should match Rollout.template.metadata.labels
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-preview        # must match Rollout.spec.strategy.blueGreen.previewService
+  labels:
+    app: nginx-bluegreen-svc
+spec:
+  selector:
+    app: nginx-bluegreen     # Rollouts will re-point this to the new ReplicaSet for preview
+  ports:
+    - port: 80
+      targetPort: 80

@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1        # API version for Argo Rollouts
+kind: Rollout                          # Resource type is Rollout
+metadata:
+  name: nginx-bluegreen                # Name of the rollout resource
+spec:
+  replicas: 3                          # Number of desired pod replicas
+  strategy:
+    blueGreen:                         # Use blue-green deployment strategy
+      activeService: nginx-active      # Service for active (live) pods
+      previewService: nginx-preview    # Service for preview (new) pods
+      autoPromotionEnabled: false      # Manual promotion to active required
+  selector:
+    matchLabels:
+      app: nginx-bluegreen             # Select pods with this label
+  template:
+    metadata:
+      labels:
+        app: nginx-bluegreen           # Label applied to pods
+    spec:
+      containers:
+      - name: nginx                    # Name of the container
+        image: nginx:1.19              # Container image to use
+        ports:
+        - containerPort: 80            # Port exposed by the container

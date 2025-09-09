@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-canary-svc
+  namespace: default
+spec:
+  selector:
+    app: nginx-canary     # must match Rollout.template.metadata.labels
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP         # change to NodePort or LoadBalancer if you need external access
