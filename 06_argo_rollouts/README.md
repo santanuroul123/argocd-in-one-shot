@@ -55,6 +55,8 @@ A Rollout is Kubernetes workload resource which is equivalent to a Kubernetes De
 * Two environments: **Blue (stable)** & **Green (new)**.
 * Both versions exist → traffic switched at once after testing.
 
+  ![blue-green](output_images/image-23.png)
+
 Example flow:
 
 1. Deploy new version (Green).
@@ -68,6 +70,8 @@ Example flow:
 
 * Gradually shift traffic from **old → new version** in steps.
 * Can include metric checks or manual approvals.
+
+  ![canary](output_images/image-22.png)
 
 Example flow:
 
