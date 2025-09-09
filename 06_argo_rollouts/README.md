@@ -19,8 +19,6 @@ A Rollout is Kubernetes workload resource which is equivalent to a Kubernetes De
   * **Blue/Green Deployments**
   * **Canary Releases** (with traffic shifting, metrics analysis, manual or automated promotion)
 
-* It integrates directly with **ArgoCD** → GitOps-driven progressive delivery.
-
 👉 Think of it as an **advanced Deployment** replacement (`Rollout` instead of `Deployment`).
 
 ---
