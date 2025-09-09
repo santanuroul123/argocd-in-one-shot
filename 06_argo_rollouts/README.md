@@ -171,9 +171,11 @@ Started rollout:
 ![alt text](output_images/image-3.png)
 
 After rollout (You can see the previous version is successfully scale down and new version is running):
+
 ![alt text](output_images/image-4.png)
 
 Again make a port-forward for `nginx-canary-svc` and you will see apache:
+
 ![apche-app](output_images/image-9.png)
 
 Watch at Argo Dashboard:
@@ -183,6 +185,7 @@ kubectl argo rollouts dashboard &
 ```
 
 Open the inbound rule for port `3100` and watch at: `http://<instance_public_ip>:3100`:
+
 ![nginx-canary](output_images/image-5.png)
 
 ![nginx-canary-detail-apache](output_images/image-6.png)
@@ -229,7 +232,7 @@ kubectl apply -f rollout-bluegreen.yaml
 kubectl apply -f services-bluegreen.yaml
 ```
 
-Watch:
+Watch at new terminal connected with instance:
 
 ```bash
 kubectl argo rollouts get rollout nginx-bluegreen --watch
@@ -252,18 +255,20 @@ kubectl argo rollouts dashboard &
 ```
 
 Open the inbound rule for port `3100` and watch at: `http://<instance_public_ip>:3100`:
+
 ![nginx-bluegreen-dashboard](output_images/image-11.png)
 
 
 ![rollout-detail](output_images/image-12.png)
 
 
-Upgrade image (simulate new version):
+Upgrade image as `apache` (simulate new version):
 ```bash
 kubectl argo rollouts set image nginx-bluegreen nginx=httpd:2.4
 ```
 
 Preview service will show new version, active stays old.
+
 ![active-preview](output_images/image-15.png)
 
 ![active-preview-ui](output_images/image-16.png)
@@ -276,9 +281,11 @@ kubectl port-forward svc/nginx-preview 8083:80 --address=0.0.0.0 &
 
 Access at:
 * Active(Nginx): `http://<instance_public_ip>:8082`
+
     ![nginx-active](output_images/image-17.png)
 
 * Preview(Apache): `http://<instance_public_ip>:8083`
+
     ![nginx-preview](output_images/image-18.png)
 
 
@@ -287,12 +294,14 @@ Switch traffic to new version:
 kubectl argo rollouts promote nginx-bluegreen
 ```
 
-After promote(Apache will become active):
+After promote(Apache will become active and nginx go down):
+
 ![nginx-active-apache](output_images/image-19.png)
 
 ![apche-revision](output_images/image-20.png)
 
 Now both service will show `Apache` Page:
+
 ![both-app](output_images/image-21.png)
 
 Rollback (Optional):
