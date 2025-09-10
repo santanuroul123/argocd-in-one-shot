@@ -43,7 +43,7 @@ You should see something like:
 
 ### Install `argo` CLI for Linux
 
-Create [install_argo](install_argo.sh) and make it executable & run it.
+Create [install_argo.sh](install_argo.sh) and make it executable & run it.
 
 ```bash
 chmod +x install_argo.sh
@@ -62,9 +62,9 @@ kubectl -n argo port-forward svc/argo-server 2746:2746 --address=0.0.0.0 &
 
     > Note: Use `https` not `http`(Navigating to http will result in a server-side error.)
 
-* The UI shows workflows, DAG views, logs and history.
+* The Workflow UI looks like:
 
-![argo-ui](output_images/image-2.png)
+    ![argo-ui](output_images/image-2.png)
 
 ---
 
