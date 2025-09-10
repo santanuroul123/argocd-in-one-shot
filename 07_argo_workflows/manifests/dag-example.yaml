@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1           # Specifies the API version for Argo Workflows
+kind: Workflow                             # Declares this resource as a Workflow
+metadata:
+  generateName: dag-example-               # Prefix for the generated workflow name
+  namespace: argo                          # Namespace where the workflow will run
+spec:
+  entrypoint: pipeline                     # Entry point template for the workflow
+  templates:
+  - name: pipeline                         # Defines the 'pipeline' template
+    dag:                                   # Specifies this template uses a DAG structure
+      tasks:
+        - name: step1                      # First task in the DAG named 'step1'
+          template: step                   # Uses the 'step' template
+          arguments:
+            parameters: [{name: msg, value: "hello"}]  # Passes 'hello' as the 'msg' parameter
+        - name: step2                      # Second task in the DAG named 'step2'
+          dependencies: [step1]            # Runs after 'step1' completes
+          template: step                   # Uses the 'step' template
+          arguments:
+            parameters:
+            - name: msg
+              value: "{{tasks.step1.outputs.parameters.result}}"  # Uses output from 'step1' as input
+  - name: step                             # Defines the 'step' template
+    inputs:
+      parameters:
+      - name: msg                          # Declares an input parameter named 'msg'
+    container:
+      image: alpine:3.16                   # Uses the Alpine Linux 3.16 container image
+      command: [sh, -c]                    # Runs a shell command
+      args:
+      - |
+        echo "task got: {{inputs.parameters.msg}}"         # Prints the received message
+        # produce output as parameter
+        echo "{{inputs.parameters.msg}} world" > /tmp/output  # Appends 'world' and writes to output file
+    outputs:
+      parameters:
+      - name: result                       # Declares an output parameter named 'result'
+        valueFrom:
+          path: /tmp/output                # Gets the output value from the specified file path

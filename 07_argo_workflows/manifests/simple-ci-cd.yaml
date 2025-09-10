@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1           # API version for Argo Workflows
+kind: Workflow                             # Resource type is Workflow
+metadata:
+  generateName: simple-ci-cd-              # Prefix for generated workflow names
+  namespace: argo                          # Namespace where the workflow runs
+spec:
+  entrypoint: ci-cd-pipeline               # Entry template for the workflow, it defines the main template, which consists of three steps: build, test, and deploy.
+  templates:
+  - name: ci-cd-pipeline                   # Main pipeline template
+    steps:
+    - - name: build                        # First step: build
+        template: build-step               # Uses the build-step template
+    - - name: test                         # Second step: test
+        template: test-step                # Uses the test-step template
+    - - name: deploy                       # Third step: deploy
+        template: deploy-step              # Uses the deploy-step template
+
+  # Build step
+  - name: build-step                       # Template for build step
+    container:
+      image: alpine:3.16                   # Use Alpine Linux image
+      command: [sh, -c]                    # Run shell command
+      args: ["echo 🚀 Build done"]          # Print build done message
+
+  # Test step
+  - name: test-step                        # Template for test step
+    container:
+      image: alpine:3.16                   # Use Alpine Linux image
+      command: [sh, -c]                    # Run shell command
+      args: ["echo ✅ Tests passed"]        # Print tests passed message
+
+  # Deploy step
+  - name: deploy-step                      # Template for deploy step
+    container:
+      image: alpine:3.16                   # Use Alpine Linux image
+      command: [sh, -c]                    # Run shell command
+      args: ["echo 📦 Deploy completed"]    # Print deploy completed message

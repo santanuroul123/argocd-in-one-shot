@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1           # Specifies the API version for Argo Workflows
+kind: WorkflowTemplate                     # Declares this resource as a WorkflowTemplate
+metadata:
+  name: hello-template                     # Name of the workflow template
+  namespace: argo                          # Namespace where the template is deployed
+spec:
+  entrypoint: say                          # The main template to execute when the workflow starts
+  templates:
+  - name: say                              # Name of the template
+    inputs:
+      parameters:
+      - name: who                          # Defines a parameter named 'who'
+        default: "world"                   # Default value for 'who' is 'world'
+    container:
+      image: alpine:3.16                   # Docker image to use for the container
+      command: [sh, -c]                    # Command to run in the container
+      args: ["echo Hello {{inputs.parameters.who}}"]  # Arguments for the command, prints Hello and the value of 'who'

@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1           # API version for Argo Workflows CronWorkflow
+kind: CronWorkflow                        # Resource type is CronWorkflow
+metadata:
+  name: hello-cron                        # Name of the CronWorkflow
+  namespace: argo                         # Namespace where the CronWorkflow will be created
+spec:
+  schedule: "* * * * *"                   # Cron schedule expression (every minute)
+  timezone: "UTC"                         # Timezone for the schedule
+  workflowSpec:                           # Specification of the workflow to run
+    entrypoint: echo-template             # Entry point template for the workflow
+    templates:
+    - name: echo-template                 # Template name
+      container:                          # Container to run in the workflow
+        image: alpine:latest              # Docker image to use
+        command: [echo]                   # Command to execute in the container
+        args: ["Hello from Argo CronWorkflow!"] # Arguments for the command
