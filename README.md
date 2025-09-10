@@ -78,7 +78,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 6: Argo Rollouts (Intermediate)](./06_argocd_rollouts/)
+## [Chapter 6: Argo Rollouts (Intermediate)](./06_argo_rollouts/)
 
 - What is Argo Rollouts?
 - Canary & Blue/Green deployments with ArgoCD
@@ -86,14 +86,14 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 7: Argo Workflows (Intermediate)](./07_argocd_workflows/)
+## [Chapter 7: Argo Workflows (Intermediate)](./07_argo_workflows/)
 
 - What is Argo Workflows? (K8s-native CI engine)
 - Defining workflows (build → test → deploy)
 
 ---
 
-## [Chapter 8: Argo Events (Intermediate)](./08_argocd_events/)
+## [Chapter 8: Argo Events (Intermediate)](./08_argo_events/)
 
 - Event-driven GitOps (triggers from GitHub, Webhooks, Cloud events)
 - Use cases: trigger deployments on push, PR merge, image update
@@ -101,7 +101,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 9: Argo Notifications (Intermediate)](./09_argocd_notifications/)
+## [Chapter 9: Argo Notifications (Intermediate)](./09_argo_notifications/)
 
 - Notification system overview
 - Integrating with Slack, Microsoft Teams, Email
@@ -109,7 +109,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 10: Argo Image Updater (Advanced)](./10_argocd_image_updater/)
+## [Chapter 10: Argo Image Updater (Advanced)](./10_argo_image_updater/)
 
 - What is Image Updater?
 - Automating image version updates in Git
