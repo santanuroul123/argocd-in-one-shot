@@ -60,7 +60,7 @@ kubectl -n argo port-forward svc/argo-server 2746:2746 --address=0.0.0.0 &
 
 * open inbound rule for port `2746` and then open `https://<instance_public_ip>:2746`.
 
-    > Note: Use `https` not `http`(Navigating to http will result in a server-side error.)
+    > Note: Use `https` not `http`(Navigating to http will result in a server-side error.), Go to advanced option and click on the url.
 
 * The Workflow UI looks like:
 
