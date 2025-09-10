@@ -82,7 +82,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 - What is Argo Rollouts?
 - Canary & Blue/Green deployments with ArgoCD
-- Demo: Rolling update → Canary → Rollback
+- Demo: Canary → Rollback
 
 ---
 
@@ -90,7 +90,6 @@ Below is complete syllabus for ArgoCD in One shot:
 
 - What is Argo Workflows? (K8s-native CI engine)
 - Defining workflows (build → test → deploy)
-- Example: Workflow pipeline integrated with ArgoCD
 
 ---
 
