@@ -78,27 +78,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 6: Argo Rollouts (Intermediate)](./06_argo_rollouts/)
-
-- What is Argo Rollouts?
-- Canary & Blue/Green deployments with ArgoCD
-- Demo: Canary → Rollback
-
----
-
-## [Chapter 7: Argo Workflows (Intermediate)](./07_argo_workflows/)
-
-- What is Argo Workflows? (K8s-native CI engine)
-- Defining workflows (build → test → deploy)
-
----
-
-## [Chapter 8: Argo Events (Intermediate)](./08_argo_events/)
-
-- Argo-Workflow trigger using Argo Events
----
-
-## [Chapter 9: Argo Notifications (Intermediate)](./09_argo_notifications/)
+## [Chapter 6: ArgoCD Notifications (Intermediate)](./06_argocd_notifications/)
 
 - Notification system overview
 - Integrating with Email
@@ -106,7 +86,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 10: Argo Image Updater (Advanced)](./10_argo_image_updater/)
+## [Chapter 7: ArgoCD Image Updater (Advanced)](./07_argocd_image_updater/)
 
 - What is Image Updater?
 - Automating image version updates in Git
@@ -114,7 +94,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 11: Monitoring the Argo Suite (Advanced)](./11_monitoring_the_argosuite/)
+## [Chapter 8: Monitoring the ArgoCD (Advanced)](./08_monitoring_the_argocd/)
 
 - Observability with Prometheus + Grafana
 - Logs with Loki
@@ -125,12 +105,33 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ---
 
-## [Chapter 12: Security & Scaling (Advanced)](./12_security_scaling/)
+## [Chapter 9: Security & Scaling (Advanced)](./09_security_scaling/)
 
 - RBAC in ArgoCD (role-based access control)
 - SSO with Dex/OIDC (GitHub, Google, LDAP)
 - Scaling ArgoCD for high availability (HA setup)
 - GitOps best practices for enterprises
+
+---
+
+## [Chapter 10: Argo Rollouts (Intermediate)](./10_argo_rollouts/)
+
+- What is Argo Rollouts?
+- Canary & Blue/Green deployments with ArgoCD
+- Demo: Canary → Rollback
+
+---
+
+## [Chapter 11: Argo Workflows (Intermediate)](./11_argo_workflows/)
+
+- What is Argo Workflows? (K8s-native CI engine)
+- Defining workflows (build → test → deploy)
+
+---
+
+## [Chapter 12: Argo Events (Intermediate)](./12_argo_events/)
+
+- Argo-Workflow trigger using Argo Events
 
 ---
 

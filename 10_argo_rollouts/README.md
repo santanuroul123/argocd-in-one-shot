@@ -1,4 +1,4 @@
-# Chapter 6: Argo Rollouts
+# Chapter 10: Argo Rollouts
 
 ## Rollout:
 

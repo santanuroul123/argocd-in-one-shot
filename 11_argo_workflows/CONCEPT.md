@@ -1,4 +1,4 @@
-# Chapter 7 — Argo Workflows
+# Chapter 11 — Argo Workflows
 
 ## 1. What is Argo Workflows?
 

@@ -1,4 +1,4 @@
-# Chapter 7 — Argo Workflows - Hands-On
+# Chapter 11 — Argo Workflows - Hands-On
 
 For Concept of Argo Workflow READ: [CONCEPT.md](CONCEPT.md)
 
