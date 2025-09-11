@@ -1,4 +1,4 @@
-# Chapter 8 — Argo Events
+# Chapter 8 - Argo Events
 
 Argo Events is an event-driven workflow automation framework for Kubernetes which helps you trigger K8s objects, Argo Workflows, Serverless workloads, etc. on events from a variety of sources like webhooks, S3, schedules, messaging queues, gcp pubsub, sns, sqs, etc.
 
@@ -90,7 +90,7 @@ kubectl get all -n argo-events
 
 ---
 
-## Example — Webhook → start Argo Workflow
+## Example - Webhook → start Argo Workflow
 
 **Goal:** Demonstrate using a webhook EventSource and a Sensor that creates an Argo Workflow CRD.
 
@@ -98,37 +98,38 @@ kubectl get all -n argo-events
 
 1. Create event-source.
 
-Use: [event-source.yaml](event-source.yaml)
+    Use: [event-source.yaml](event-source.yaml)
 
-Apply:
-```bash
-kubectl apply -f event-source.yaml
-```
+    Apply:
+    ```bash
+    kubectl apply -f event-source.yaml
+    ```
 
-The above event-source contains a single event configuration that runs an HTTP server on port `12000` with endpoint `example`.
+    The above event-source contains a single event configuration that runs an HTTP server on port `12000` with endpoint `example`.
 
 After running the above command, the event-source controller will create a pod and service.
 
 1. Create a service account with RBAC settings to allow the sensor to trigger workflows, and allow workflows to function.
 
-```bash
- # sensor rbac
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/rbac/sensor-rbac.yaml
- # workflow rbac
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/rbac/workflow-rbac.yaml
-```
+    ```bash
+    # sensor rbac
+    kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/rbac/sensor-rbac.yaml
+    # workflow rbac
+    kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/rbac/workflow-rbac.yaml
+    ```
 
 2. Create webhook sensor.
 
-Use: [webhook-sensor.yaml](webhook-sensor.yaml)
+    Use: [webhook-sensor.yaml](webhook-sensor.yaml)
 
-```bash
-kubectl apply -f webhook-sensor.yaml
-```
+    ```bash
+    kubectl apply -f webhook-sensor.yaml
+    ```
 
 Once the sensor object is created, sensor controller will create corresponding pod and a service.
 
 Verify:
+
 ```bash
 kubectl get pods -n argo-events
 kubectl get svc -n argo-events
@@ -140,36 +141,37 @@ kubectl describe eventsources webhook -n argo-events
 
 
 1. Expose the event-source pod via Ingress, OpenShift Route or port forward to consume requests over HTTP.
-```bash
-kubectl -n argo-events port-forward svc/webhook-eventsource-svc 12000:12000 --address=0.0.0.0 &
-```
 
-> Open the inbound rule for port `12000`.
+    ```bash
+    kubectl -n argo-events port-forward svc/webhook-eventsource-svc 12000:12000 --address=0.0.0.0 &
+    ```
+
+    > Open the inbound rule for port `12000`.
 
 2. Use either Curl or Postman to send a post request to the http://localhost:12000/example.
 
-```bash
-curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST http://<instance_public_ip>:12000/example
-```
+    ```bash
+    curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST http://<instance_public_ip>:12000/example
+    ```
 
-> Replace `<instance_public_ip>` with your actual instance public ip.
+    > Replace `<instance_public_ip>` with your actual instance public ip.
 
-![curl-success](output_images/image-2.png)
+    ![curl-success](output_images/image-2.png)
 
 You can see that workflow is got triggered and completed in your Argo-workflow in `argo-events` namespace.
 
 ![workflow](output_images/image-1.png)
 
 3. Verify the workflow is created and running:
-```bash
-kubectl get wf -n argo-events
-kubectl describe wf <workflow_name> -n argo-events
-```
+    ```bash
+    kubectl get wf -n argo-events
+    kubectl describe wf <workflow_name> -n argo-events
+    ```
 
 4. View logs of the workflow pod:
-```bash
-kubectl logs -l workflows.argoproj.io/workflow=<workflow_name> -n argo-events
-```
+    ```bash
+    kubectl logs -l workflows.argoproj.io/workflow=<workflow_name> -n argo-events
+    ```
 
 5. Using the UI:
    Open the Argo Workflows UI (`https://<instance_public_ip>:2746`) and observe the workflow execution graphically.

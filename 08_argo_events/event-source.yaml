@@ -1,43 +1,43 @@
-apiVersion: argoproj.io/v1alpha1
-kind: EventSource
+apiVersion: argoproj.io/v1alpha1           # Specifies the API version for the EventSource resource
+kind: EventSource                          # Declares the resource type as EventSource
 metadata:
-  name: webhook
-  namespace: argo-events
+  name: webhook                            # Name of the EventSource object
+  namespace: argo-events                   # Namespace where the EventSource will be created
 spec:
-  service:
-    ports:
-      - port: 12000
-        targetPort: 12000
+  service:                                 # Configuration for the service that exposes the event source
+    ports:                                 # List of ports to expose
+      - port: 12000                     # Port exposed by the service
+        targetPort: 12000                  # Port on the pod to forward traffic to
     metadata:
       labels:
-        foo: bar
+        foo: bar                           # Example label for the service
       annotations:
-        foo: bar
+        foo: bar                           # Example annotation for the service
   webhook:
     # event-source can run multiple HTTP servers. Simply define a unique port to start a new HTTP server
     example:
       # port to run HTTP server on
-      port: "12000"
+      port: "12000"                        # Port for the webhook HTTP server
       # endpoint to listen to
-      endpoint: /example
+      endpoint: /example                   # URL endpoint for receiving webhook events
       # HTTP request method to allow. In this case, only POST requests are accepted
-      method: POST
+      method: POST                         # HTTP method allowed for this endpoint
 
 #    example-foo:
-#      port: "12000"
-#      endpoint: /example2
-#      method: POST
+#      port: "12000"                       # Another webhook server on the same port
+#      endpoint: /example2                 # Different endpoint
+#      method: POST                        # Only POST requests allowed
 
 # Uncomment to use secure webhook
 #    example-secure:
-#      port: "13000"
-#      endpoint: "/secure"
-#      method: "POST"
+#      port: "13000"                       # Port for secure webhook server
+#      endpoint: "/secure"                 # Secure endpoint
+#      method: "POST"                      # Only POST requests allowed
 #      # k8s secret that contains the cert
 #      serverCertSecret:
-#        name: my-secret
-#        key: cert-key
+#        name: my-secret                   # Name of the Kubernetes secret for the certificate
+#        key: cert-key                     # Key in the secret for the certificate
 #      # k8s secret that contains the private key
 #      serverKeySecret:
-#        name: my-secret
-#        key: pk-key
+#        name: my-secret                   # Name of the Kubernetes secret for the private key
+#        key: pk-key                       # Key in the secret for the private key

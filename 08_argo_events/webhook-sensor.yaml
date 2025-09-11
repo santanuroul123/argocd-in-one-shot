@@ -1,39 +1,39 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Sensor
+apiVersion: argoproj.io/v1alpha1                # Specifies the API version for the Sensor resource
+kind: Sensor                                   # Declares this resource as a Sensor
 metadata:
-  name: webhook
-  namespace: argo-events
+  name: webhook                                # Name of the Sensor
+  namespace: argo-events                       # Namespace where the Sensor is deployed
 spec:
-  template:
-    serviceAccountName: operate-workflow-sa
+  template:                                    # Pod template for the Sensor's pods
+    serviceAccountName: operate-workflow-sa     # Service account used by the Sensor's pods
   dependencies:
-    - name: test-dep
-      eventSourceName: webhook
-      eventName: example
+    - name: test-dep                           # Name of the dependency
+      eventSourceName: webhook                 # Event source to listen to (must match an EventSource)
+      eventName: example                       # Event name to trigger on
   triggers:
     - template:
-        name: webhook-workflow-trigger
+        name: webhook-workflow-trigger         # Name of the trigger template
         k8s:
-          operation: create
+          operation: create                    # Kubernetes operation to perform (create resource)
           source:
             resource:
-              apiVersion: argoproj.io/v1alpha1
-              kind: Workflow
+              apiVersion: argoproj.io/v1alpha1 # API version of the resource to create (Workflow)
+              kind: Workflow                   # Kind of resource to create (Argo Workflow)
               metadata:
-                generateName: webhook-
+                generateName: webhook-         # Prefix for generated Workflow names
               spec:
-                entrypoint: whalesay
+                entrypoint: whalesay           # Entry point template for the Workflow
                 arguments:
                   parameters:
-                  - name: message
-                    value: hello world
+                  - name: message              # Workflow parameter name
+                    value: hello world         # Default value for the parameter
                 templates:
-                - name: whalesay
+                - name: whalesay               # Name of the template
                   inputs:
                     parameters:
-                    - name: message
+                    - name: message            # Template parameter name
                   container:
-                    image: alpine:3.16
-                    command: ["sh", "-c"]
+                    image: alpine:3.16         # Container image to use
+                    command: ["sh", "-c"]      # Command to run in the container
                     # use the Argo template token format your cluster supports:
-                    args: ["echo \"{{inputs.parameters.message}}\"; sleep 1"]
+                    args: ["echo \"{{inputs.parameters.message}}\"; sleep 1"] # Arguments for the command, prints the message and sleeps
