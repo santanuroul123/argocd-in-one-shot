@@ -101,8 +101,8 @@ Below is complete syllabus for ArgoCD in One shot:
 ## [Chapter 9: Argo Notifications (Intermediate)](./09_argo_notifications/)
 
 - Notification system overview
-- Integrating with Slack, Email
-- Demo: Slack or email alert for sync failure
+- Integrating with Email
+- Demo: Email alert for sync failure
 
 ---
 
