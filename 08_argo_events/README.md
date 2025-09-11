@@ -148,7 +148,7 @@ kubectl describe eventsources webhook -n argo-events
 
     > Open the inbound rule for port `12000`.
 
-2. Use either Curl or Postman to send a post request to the http://localhost:12000/example.
+2. Use either Curl or Postman to send a post request to the http://<instance_public_ip>:12000/example.
 
     ```bash
     curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST http://<instance_public_ip>:12000/example
@@ -158,7 +158,7 @@ kubectl describe eventsources webhook -n argo-events
 
     ![curl-success](output_images/image-2.png)
 
-You can see that workflow is got triggered and completed in your Argo-workflow in `argo-events` namespace.
+You can see that workflow got triggered and completed in your Argo-workflow in `argo-events` namespace.
 
 ![workflow](output_images/image-1.png)
 
