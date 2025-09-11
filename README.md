@@ -95,16 +95,13 @@ Below is complete syllabus for ArgoCD in One shot:
 
 ## [Chapter 8: Argo Events (Intermediate)](./08_argo_events/)
 
-- Event-driven GitOps (triggers from GitHub, Webhooks, Cloud events)
-- Use cases: trigger deployments on push, PR merge, image update
-- Demo: GitHub webhook → ArgoCD sync
-
+- Argo-Workflow trigger using Argo Events
 ---
 
 ## [Chapter 9: Argo Notifications (Intermediate)](./09_argo_notifications/)
 
 - Notification system overview
-- Integrating with Slack, Microsoft Teams, Email
+- Integrating with Slack, Email
 - Demo: Slack or email alert for sync failure
 
 ---
