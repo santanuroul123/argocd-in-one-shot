@@ -14,8 +14,6 @@ data:
     port: 465
     from: $email-username
 
-  context.argocdUrl: "http://3.255.96.246:8080"
-
   # Template for Degraded health
   template.email-health-degraded: |
     email:
@@ -47,7 +45,6 @@ data:
   # Triggers
   trigger.on-health-degraded: |
     - when: app.status.health.status == 'Degraded'
-      oncePer: app.status.sync.revision
       send: [email-health-degraded]
 
   trigger.on-deployed: |

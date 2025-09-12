@@ -49,6 +49,7 @@ Create a Kubernetes Secret with SMTP credentials:
 Use: [secret-smtp.yaml](secret-smtp.yaml)
 
 > Replace `your-email@example.com` with your actual sender gmail address (In which you have created app password).
+
 > Replace `your-smtp-password` with your actual app password created in gmail.
 
 
@@ -68,7 +69,6 @@ ArgoCD Notifications configuration lives in `argocd-notifications-cm` ConfigMap.
 
 Use: [argocd-notifications-cm.yaml](argocd-notifications-cm.yaml)
 
-> Replace `your-email@example.com` with your sender email(In which you have created app password).
 > Replace `<your-argocd-server>` with your ArgoCD Server URL basically instance public Ip, where argocd is running.(for getting server url in email notification)
 
 Apply it:
@@ -108,8 +108,9 @@ We’ll use our **`chai-app`** Application and annotate it for notifications.
 
 Use: [chai-app.yaml](chai-app.yaml)
 
-> Replace `receiver@example.com` with receiver gmail address.
-> Replace `<your-username>` with your GitHub Username (The repository you have forked & clonned and has this dirctory with manifest: `applicationsets/chai-app`)
+> Replace `<receiver@example.com>` with receiver gmail address.
+
+> Replace `<your-username>` with your GitHub Username (The repository you have forked & clonned and has this directory with manifest: `applicationsets/chai-app`)
 
 Apply:
 
@@ -152,24 +153,24 @@ kubectl apply -f chai-app.yaml
 
 2. **Introduce a failure**:
 
-   * Edit the Git manifest for chai-app (e.g., wrong image tag), like below(the `v1` tag does not exist):
+   * Edit the Git manifest for chai-app (e.g., wrong image tag), like below (the `v1` tag does not exist):
 
       ![image-tag](output_images/image-8.png)
 
    * Commit & push → ArgoCD App will go in `Degraded` status after sometime (wait for it to become `Degraded` - it will take time).
 
-   * Verify in another terminal by connect to instance, run:
+   * Verify in another terminal by connecting to instance, run:
 
      ```bash
       kubectl -n argocd logs deploy/argocd-notifications-controller --follow
      ```
 
-      * wait for it to become `ture`(will become true when App health will be `Degraded`, and triggers the email sending):
+      * wait for it to become `ture` (will become true when App health will be `Degraded`, and triggers the email sending):
         
         ![health-false](output_images/image-7.png)
 
 3. **Observe Email**:
-   * When app status becomes `Degraded` email will be sent:
+   * When app status becomes `Degraded`, email will be sent:
 
       ![degraged-app](output_images/image-9.png)
 
@@ -216,3 +217,9 @@ kubectl apply -f chai-app.yaml
 | `on-sync-status-unknown-to-synced`    | Sync status changed from `Unknown` → `Synced`.         | For situations where Git state stabilizes after uncertainty (e.g., flaky repo/cluster connectivity). |
 | `on-sync-status-unknown-to-outofsync` | Sync status changed from `Unknown` → `OutOfSync`.      | Helps identify drift detection after ambiguous states.                                               |
 
+---
+
+For more READ: [ArgoCD Notifications](https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/)
+
+
+Happy Learning!
