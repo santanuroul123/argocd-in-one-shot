@@ -4,17 +4,19 @@ metadata:
   name: argocd-notifications-cm
   namespace: argocd
 data:
+  # Context section: defines variables available in notification templates
   context: |
     argocdUrl: "http://<your-argocd-server>:8080"  # Replace with your ArgoCD server URL
 
+  # Email service configuration: SMTP settings for sending emails
   service.email: |
-    username: $email-username
-    password: $email-password
-    host: smtp.gmail.com
-    port: 465
-    from: $email-username
+    username: $email-username         # Email username (set as secret)
+    password: $email-password         # Email password (set as secret)
+    host: smtp.gmail.com              # SMTP server host
+    port: 465                         # SMTP server port (SSL)
+    from: $email-username             # Sender email address
 
-  # Template for Degraded health
+  # Template for Degraded health: email content when app health is degraded
   template.email-health-degraded: |
     email:
       subject: "[ArgoCD] {{.app.metadata.name}} health is {{.app.status.health.status}}"
@@ -28,7 +30,7 @@ data:
       ⚙️ Last operation: {{ if .app.operationState }}{{ .app.operationState.phase }}{{ else }}<none>{{ end }}
       🔗 Details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
 
-  # Template for Deployed (synced + healthy)
+  # Template for Deployed (synced + healthy): email content when app is successfully deployed
   template.email-deployed: |
     email:
       subject: "[ArgoCD] {{.app.metadata.name}} successfully deployed 🎉"
@@ -42,11 +44,15 @@ data:
       Finished at: {{ if .app.operationState }}{{ .app.operationState.finishedAt }}{{ end }}
       🔗 Details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
 
-  # Triggers
+  # Trigger for Degraded health: sends email when app health is degraded
   trigger.on-health-degraded: |
     - when: app.status.health.status == 'Degraded'
       send: [email-health-degraded]
 
+  # Trigger for Deployed: sends email when app is synced and healthy
   trigger.on-deployed: |
     - when: app.status.operationState.phase == 'Succeeded' and app.status.health.status == 'Healthy'
       send: [email-deployed]
+
+# This ConfigMap configures ArgoCD Notifications to send email alerts for application health changes.
+# It defines SMTP settings, notification templates, and triggers for sending emails on specific events.

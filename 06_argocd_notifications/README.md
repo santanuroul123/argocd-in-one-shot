@@ -50,7 +50,7 @@ Use: [secret-smtp.yaml](secret-smtp.yaml)
 
 > Replace `your-email@example.com` with your actual sender gmail address (In which you have created app password).
 
-> Replace `your-smtp-password` with your actual app password created in gmail.
+> Replace `your-smtp-password` with your actual app password created in gmail as it is (do not remove spaces between them).
 
 
 Apply it:
