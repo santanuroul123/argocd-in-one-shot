@@ -1,0 +1,25 @@
+# chai-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chai-app
+  namespace: argocd
+  annotations:
+    # subscribe to the trigger on-health-degraded and send via email
+    # notifications.argoproj.io/subscribe.on-health-degraded.email: "<receiver@example.com>" # receiver email address
+    notifications.argoproj.io/subscribe.on-health-degraded.email: "amitabhsoni2004@gmail.com, amitabhdevops2024@gmail.com, amitabhdevops2004@gmail.com" # receiver email address, The `.email` notifier is defined in argocd-notifications-cm.yaml - service.email
+    notifications.argoproj.io/subscribe.on-deployed.email: "amitabhsoni2004@gmail.com, amitabhdevops2024@gmail.com"
+spec:
+  project: default
+  source:
+    # repoURL: https://github.com/<your-username>/argocd-demos.git
+    repoURL: https://github.com/Amitabh-DevOps/argocd-demos.git
+    targetRevision: main
+    path: applicationsets/chai-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
