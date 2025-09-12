@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chai-app
+  namespace: argocd
+  annotations:
+    # Assign alias 'chai-app' to your image
+    argocd-image-updater.argoproj.io/image-list: chai-app=<your-dockerhub-username>/chai-devops
+
+    # Use git write-back
+    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd-image-updater-git-creds # Reference to the secret containing git credentials
+
+    # Update strategy for chai-app image
+    argocd-image-updater.argoproj.io/chai-app.update-strategy: semver
+
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/<your-github-username>/argocd-demos.git
+    targetRevision: main
+    path: image_updater/chai-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
