@@ -1,4 +1,4 @@
-# Chapter 7 — Argo CD Image Updater
+# Chapter 7 - Argo CD Image Updater
 
 Argo CD Image Updater automates updating container images in ArgoCD-managed Applications. Instead of manually editing manifests every time a new image tag is pushed, Image Updater detects new versions and either updates your Git repository (recommended) or the ArgoCD Application directly.
 
@@ -235,8 +235,8 @@ Verfy `chai-app` in ArgoCD Server:
 1. Push a new image tag to your Docker Hub:
 
    ```bash
-   docker tag amitabhdevops/chai-devops:v1.0.2 amitabhdevops/chai-devops:v1.0.3
-   docker push amitabhdevops/chai-devops:v1.0.3
+   docker tag <your-dockerhub-username>/chai-devops:v1.0.0 <your-dockerhub-username>/chai-devops:v1.0.1
+   docker push <your-dockerhub-username>/chai-devops:v1.0.1
    ```
 
 2. Wait for Image Updater to poll. Tail logs:
@@ -269,7 +269,7 @@ Verfy `chai-app` in ArgoCD Server:
 
         ![chai-app-working](output_images/image-15.png)
 
-6. And similarly, in future you update image tag then it will replce `v1.0.1` with new one like below:
+6. And similarly, in future when you update image tag then it will replce `v1.0.1` with new one, like below:
 
     ![chai-app-new](output_images/image-16.png)
 
@@ -299,8 +299,22 @@ Verfy `chai-app` in ArgoCD Server:
 
 Now the flow is real-world: pull my base image → re-publish under your account → push a new version → Image Updater commits → ArgoCD syncs → cluster updated automatically.
 
+---
+
+## Why we used Kustomize (important note)
+
+We converted the plain manifest directory into a **Kustomize** directory because Image Updater **requires** applications to be rendered by supported templating engines (Kustomize or Helm) to perform safe write-backs. Here’s why Kustomize is the right choice for this tutorial:
+
+* **Compatibility with Image Updater:** Image Updater skips "Directory" apps (plain manifest folders). Kustomize makes the application a supported source type so Image Updater will consider it. (You will get errors - if you provide only deployment, service etc.)
+
+* **Safe, non-invasive updates:** Instead of mutating original `deployment.yml`, Image Updater can update a `kustomization.yaml` `images:` entry or write a small companion override file. This keeps original manifests intact and makes updates predictable.
+
+* **Works well with overlays:** If you later add staging/production overlays, Kustomize keeps environment-specific changes clean while Image Updater updates just the image tags.
+
+---
+
 Read More: [ArgoCD Image Updater](https://argocd-image-updater.readthedocs.io/en/stable/)
 
 ---
 
-Happy Learning
+Happy Learning!
