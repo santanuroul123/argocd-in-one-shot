@@ -82,7 +82,7 @@ Below is complete syllabus for ArgoCD in One shot:
 
 - Notification system overview
 - Integrating with Email
-- Demo: Email alert for sync failure
+- Demo: Email alert for app degraded and deployed
 
 ---
 
