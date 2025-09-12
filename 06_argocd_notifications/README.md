@@ -210,12 +210,9 @@ kubectl apply -f chai-app.yaml
 | `on-sync-succeeded`                   | Sync completed successfully (`Synced`).                | Confirm successful deployments (optional, often used for audit trails or external dashboards).       |
 | `on-sync-failed`                      | Sync failed (e.g., invalid manifest, cluster error).   | **Most common** trigger — alert teams immediately when a GitOps deployment fails.                    |
 | `on-health-degraded`                  | Application health is reported as `Degraded`.          | Use when app becomes unhealthy (e.g., CrashLoopBackOff pods).                                        |
-| `on-health-progressing`               | Application health is `Progressing`.                   | Notify teams during rollout stages or long-running syncs.                                            |
 | `on-deployed`                         | New deployment (sync completed + health is `Healthy`). | Good for post-deploy Slack/email notifications (e.g., “deployment done, all healthy”).               |
 | `on-created`                          | Application resource created.                          | Audit trail for when new apps are onboarded to ArgoCD.                                               |
 | `on-deleted`                          | Application resource deleted.                          | Alert when an app is removed from ArgoCD (to track intentional vs accidental removals).              |
-| `on-sync-status-unknown-to-synced`    | Sync status changed from `Unknown` → `Synced`.         | For situations where Git state stabilizes after uncertainty (e.g., flaky repo/cluster connectivity). |
-| `on-sync-status-unknown-to-outofsync` | Sync status changed from `Unknown` → `OutOfSync`.      | Helps identify drift detection after ambiguous states.                                               |
 
 ---
 
