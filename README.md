@@ -97,11 +97,9 @@ Below is complete syllabus for ArgoCD in One shot:
 ## [Chapter 8: Monitoring the ArgoCD (Advanced)](./08_monitoring_the_argocd/)
 
 - Observability with Prometheus + Grafana
-- Logs with Loki
 - Example dashboards:
     - Sync success/failure
     - Application health trends
-    - Audit trails
 
 ---
 
