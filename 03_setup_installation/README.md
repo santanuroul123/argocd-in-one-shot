@@ -50,7 +50,7 @@ Before starting, ensure you have the following installed on your system:
 > 
 > The script will create **kind cluster** and **Installs ArgoCD UI and CLI** based on your choice (using HELM or manifest)
 > 
-> But before using this guide or `setup_argocd.sh`, make sure you replace the default address with your private ip in Cluster config for `apiServerAddress`
+> But before using this guide or `setup_argocd.sh`, make sure you replace the `172.31.19.178` address with your private ip in Cluster config for `apiServerAddress`
 
 ---
 
