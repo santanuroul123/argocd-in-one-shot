@@ -1,0 +1,25 @@
+# chai-app.yaml
+# This file defines an ArgoCD Application resource for deploying the chai-app.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chai-app # Name of the ArgoCD application
+  namespace: argocd # Namespace where ArgoCD is installed
+spec:
+  project: default # ArgoCD project this app belongs to
+  source:
+    repoURL: https://github.com/<your-username>/argocd-demos.git # Git repository containing the app manifests, replace <your-username>
+    targetRevision: main # Git branch, tag, or commit to track
+    path: monitoring/chai-app # Path within the repo where manifests are located
+  destination:
+    server: https://kubernetes.default.svc # Kubernetes API server address (in-cluster)
+    namespace: default # Namespace where the app will be deployed
+  syncPolicy:
+    automated:
+      prune: true # Automatically delete resources that are no longer defined in Git
+      selfHeal: true # Automatically correct drift between Git and cluster state
+
+# Brief Info:
+# This manifest enables GitOps for chai-app using ArgoCD.
+# Notifications are set up for health degradation and deployment events.
+# Automated sync ensures the cluster matches the desired state in Git.
