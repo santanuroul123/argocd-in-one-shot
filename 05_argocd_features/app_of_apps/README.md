@@ -41,6 +41,8 @@ Replace `<your-username>` with your GitHub username.
 
 Replace `<argocd_cluster_server_url>` with your ArgoCD added cluster server URL, you can retrive it using command `argocd cluster list`
 
+And also Replace `server: https://172.31.19.178:33893` in `argocd-demos` repos `app_of_apps/apps` (apache_app.yml, nginx_app.yml, online_shop_app.yml) with your ArgoCD Cluster Url, You can get it by running `argocd cluster list`
+
 ---
 
 ### 2. Apply the Root Application
