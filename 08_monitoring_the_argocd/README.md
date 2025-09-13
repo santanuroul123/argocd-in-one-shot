@@ -56,7 +56,7 @@ ArgoCD exports many Prometheus metrics, but as beginners, focus on these:
 
 > [!IMPORTANT]
 > 
-> Run this [setup_argocd.sh](../03_setup_installation/setup_argocd.sh) or follow README, but choose `Manifests` installation method for ArgoCD, because the `metrics` services of ArgoCD will be created by only official manifests, not with helm. That is requried in monitoring ArgoCD Stuff.
+> Run this [setup_argocd.sh](../03_setup_installation/setup_argocd.sh) or follow [README.md](../03_setup_installation/README.md), but choose `Manifests` installation method for ArgoCD, because the `metrics` services of ArgoCD will be created by only official manifests, not with helm. Which is requried in monitoring ArgoCD Stuff...
 
 ---
 
@@ -104,6 +104,9 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 kubectl create namespace monitoring
 helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack -n monitoring
 ```
+
+> The kube-prometheus-stack is a collection of essential tools for Kubernetes monitoring, bundling everything together for a simpler installation, It installs/deploy `Prometheus`, `Grafana`, `Prometheus Operator`, `Alertmanager`, `Node Exporter`, and `Kube-State-Metrics`.
+
 
 ![kube-prom-stack](output_images/image-2.png)
 
@@ -297,7 +300,7 @@ Here are some beginner-friendly PromQL queries to monitor ArgoCD:
 
 *Enjoy comprehensive, production-ready monitoring for your ArgoCD GitOps workflow!*
 
-Read More: [ArgoCD Metric](https://argo-cd.readthedocs.io/en/latest/operator-manual/metrics/)
+Read More: [ArgoCD Metrics](https://argo-cd.readthedocs.io/en/latest/operator-manual/metrics/)
 
 ---
 
