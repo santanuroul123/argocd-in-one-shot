@@ -298,36 +298,115 @@ Create: [argocd-rbac-cm.yaml](argocd-rbac-cm.yaml)
 Dex is a built-in OIDC identity service bundled with ArgoCD, used when you want to connect to external identity providers (GitHub, Google, LDAP, SAML).
 
 **Step 1: Register OAuth App in GitHub**
+
 - Go to GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
 - Application name: `ArgoCD`
-- Homepage URL: `https://argocd.example.com`
-- Authorization callback URL: `https://argocd.example.com/api/dex/callback`
+- Homepage URL: `http://<instance_public_url>:8080`
+- Authorization callback URL: `http://<instance_public_url>:8080/api/dex/callback`
+- Then click on `Register Application`
+
+  ![rg-app](output_images/image-12.png)
+
+  > Note: Use `https` in URLs as shown in above image, GitHub only allows HTTPS callback URLs (except for localhost). A callback registered as http://… will be rejected as invalid protocol.
+
+- Generate `Client secret` -> Click on Generate
+
+  ![client-secret](output_images/image-13.png)
+
+- Note down `Client ID` and `Client Secret`
+
+> Replace `<instance_public_url>` with your instance public ip, where argocd is running.
+
 
 **Step 2: Configure ArgoCD**
-
-`argocd-cm` ConfigMap:
-
-Create: [argocd-github-cm.yaml](argocd-github-cm.yaml)
 
 `argocd-secret`:
 
 Create: [argocd-github-secret.yaml](argocd-github-secret.yaml)
 
+> Replace `<your-client-id>` with your GitHub App Client ID
+> Replace `<your-client-secret>` with your GitHub App Client Secret
+
+
+`argocd-cm` ConfigMap:
+
+Create: [argocd-github-cm.yaml](argocd-github-cm.yaml)
+
+> Replace `<your-argocd-url>` with your ArgoCD URL (http://<instance_public_ip>:8080)
+
 ### Hands-On: Enable GitHub SSO
 
-```bash
-# Create the secret with GitHub OAuth credentials
-kubectl apply -f argocd-github-secret.yaml
+* Create the secret with GitHub OAuth credentials
 
-# Update argocd-cm with Dex configuration
-kubectl apply -f argocd-github-cm.yaml
+  ```bash
+  kubectl apply -f argocd-github-secret.yaml
+  ```
 
-# Restart ArgoCD server to apply changes
-kubectl rollout restart -n argocd deployment argocd-server
+* Update argocd-cm with Dex configuration
 
-# Verify SSO is working
-kubectl logs -n argocd deployment/argocd-server | grep -i dex
-```
+  ```bash
+  kubectl apply -f argocd-github-cm.yaml
+  ```
+
+* Restart ArgoCD server to apply changes
+
+  ```bash
+  kubectl rollout restart -n argocd deployment argocd-server
+  ```
+
+* Forward the `argocd-server` service again, because it is restarted, so you need to do port-forward again:
+
+  ```bash
+  kubectl port-forward -n argocd svc/argocd-server 8080:443 --address=0.0.0.0 &
+  ```
+
+* Open ArgoCD UI in Incognito mode, You should see `Log in via GitHub` button.
+
+  ![github-login](output_images/image-14.png)
+
+* Click on `Login with GitHub`, It will redirect to GitHub login page, Login with your GitHub credentials.
+
+  ![github-login](output_images/image-15.png)
+
+* Sign In, It will redirect back to ArgoCD UI.
+
+* You should be logged in to ArgoCD as your GitHub username.
+
+* You can verify your login user in ArgoCD UI `User Info`.
+
+  ![logged-in-using-github](output_images/image-16.png)
+
+* You can even verify in ArgoCD server logs:
+
+  ```bash
+  kubectl logs -n argocd deployment/argocd-server | grep -i "login successful"
+  ```
+
+  ![login-success](output_images/image-17.png)
+
+* Now you can manage access using your GitHub user(For me i.e: amitabhdevops2024@gmail.com - use your own shown in `User Info`) in RBAC policy.
+
+  * For example, to give `admin` role to your GitHub user, update `argocd-rbac-cm.yaml`:
+
+    ```yaml
+    g, amitabhdevops2024@gmail.com, role:admin
+    ```
+
+  * Apply the updated RBAC config:
+
+    ```bash
+    kubectl apply -f argocd-rbac-cm.yaml
+    ```
+
+  * Now you have admin access as you are mapped to `role:admin`.
+  * You can verify in ArgoCD UI, you should have admin privileges.
+
+**Best Practices:**
+- Use HTTPS for all URLs
+- Map SSO groups to roles for easier management
+
+
+
 
 ### Direct OIDC Integration
 

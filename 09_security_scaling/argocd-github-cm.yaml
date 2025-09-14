@@ -7,7 +7,8 @@ metadata:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
 data:
-  url: https://argocd.example.com
+  # url: https://<your-argocd-url>:8080
+  url: https://54.78.142.99:8080
   dex.config: |
     connectors:
     - type: github
@@ -16,5 +17,7 @@ data:
       config:
         clientID: $dex.github.clientId
         clientSecret: $dex.github.clientSecret
-        orgs:
-        - name: my-github-org
+        redirectURI: https://<your-argocd-url>/api/dex/callback
+        # If you want to restrict login to specific GitHub organizations, uncomment and modify:
+        # orgs:
+        # - name: my-github-org
