@@ -51,24 +51,4 @@ These include **Projects, App of Apps, Multi-cluster management, ApplicationSets
 
 ---
 
-## Resource Actions Table
-
-Below is a table that summarizes all possible resources and which actions are valid for each of them.
-
-| Resource\Action        | get | create | update | delete | sync | action | override | invoke |
-|----------------|:---:|:------:|:------:|:------:|:----:|:------:|:--------:|:------:|
-| applications   | ✅  |   ✅   |   ✅   |   ✅   |  ✅  |   ✅   |    ✅    |   ❌   |
-| applicationsets| ✅  |   ✅   |   ✅   |   ✅   |  ❌  |   ❌   |    ❌    |   ❌   |
-| clusters       | ✅  |   ✅   |   ✅   |   ✅   |  ❌  |   ❌   |    ❌    |   ❌   |
-| projects       | ✅  |   ✅   |   ✅   |   ✅   |  ❌  |   ❌   |    ❌    |   ❌   |
-| repositories   | ✅  |   ✅   |   ✅   |   ✅   |  ❌  |   ❌   |    ❌    |   ❌   |
-| accounts       | ✅  |   ❌   |   ✅   |   ❌   |  ❌  |   ❌   |    ❌    |   ❌   |
-| certificates   | ✅  |   ✅   |   ❌   |   ✅   |  ❌  |   ❌   |    ❌    |   ❌   |
-| gpgkeys        | ✅  |   ✅   |   ❌   |   ✅   |  ❌  |   ❌   |    ❌    |   ❌   |
-| logs           | ✅  |   ❌   |   ❌   |   ❌   |  ❌  |   ❌   |    ❌    |   ❌   |
-| exec           | ❌  |   ✅   |   ❌   |   ❌   |  ❌  |   ❌   |    ❌    |   ❌   |
-| extensions     | ❌  |   ❌   |   ❌   |   ❌   |  ❌  |   ❌   |    ❌    |   ✅   |
-
----
-
 Happy Learning!
