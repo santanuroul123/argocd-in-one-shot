@@ -107,7 +107,7 @@ Create: [argocd-user-cm.yaml](argocd-user-cm.yaml)
 > After updating password, Log In to ArgoCD UI using new password for `admin`.
 >
 
-* Create local users in argocd-cm, Apply: 
+* Create local users in `argocd-cm`, Apply: 
 
   ```bash
   kubectl apply -f argocd-user-cm.yaml
@@ -126,7 +126,9 @@ Create: [argocd-user-cm.yaml](argocd-user-cm.yaml)
   >  * Is at least 8 characters long
   >  * No more than 32 characters
   >
+  >
   > I kept Password as: For alice: alice123, For bob: bob12345
+  >
 
   ![password-setup](output_images/image-2.png)
 
@@ -151,6 +153,7 @@ Create: [argocd-user-cm.yaml](argocd-user-cm.yaml)
   1. Username: `alice`
   2. Password: `alice123` (or whatever you set)
     ![alice-login](output_images/image-5.png)
+
 
   > You can also login as `bob`.
   >
@@ -265,8 +268,8 @@ Create: [argocd-rbac-cm.yaml](argocd-rbac-cm.yaml)
 
 * You can even verify in ArgoCD UI, by login with both `alice` & `bob`:
 
-  * As `alice` you can only see (get) anything, you can not even add a repository, or create app.
-  * As `bob` you can do anything, as `bob` has admin role.
+  * As `alice` you can only see (get) applications, you can not even add a repository, or create app.
+  * As `bob` you can do anything with applications only, as `bob` has admin role. and admin has full permissions to Application resource
 
 
 **Best Practices:**
