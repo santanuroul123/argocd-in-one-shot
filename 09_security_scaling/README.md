@@ -305,6 +305,8 @@ Dex is a built-in OIDC identity service bundled with ArgoCD, used when you want 
 - Authorization callback URL: `http://<instance_public_url>:8080/api/dex/callback`
 - Then click on `Register Application`
 
+> Replace `<instance_public_url>` with your instance public ip, where argocd is running.
+
   ![rg-app](output_images/image-12.png)
 
   > Note: Use `https` in URLs as shown in above image, GitHub only allows HTTPS callback URLs (except for localhost). A callback registered as http://… will be rejected as invalid protocol.
@@ -315,16 +317,27 @@ Dex is a built-in OIDC identity service bundled with ArgoCD, used when you want 
 
 - Note down `Client ID` and `Client Secret`
 
-> Replace `<instance_public_url>` with your instance public ip, where argocd is running.
+**Step 2: Create GitHub Organisation**
 
+- Create a GitHub Organization (if you don't have one) - Free one, create from: [GitHub-Org-Create](https://github.com/organizations/plan)
+- Add your GitHub user (Add your github user) to that organization
+  
+  ![github-org](output_images/image-18.png)
 
-**Step 2: Configure ArgoCD**
+  > Organisation name should be unique, create accordingly and note it.
+
+- Skip this step for now, you can add more people to this organisation.
+
+  ![skip](output_images/image-19.png)
+
+**Step 3: Configure ArgoCD**
 
 `argocd-secret`:
 
 Create: [argocd-github-secret.yaml](argocd-github-secret.yaml)
 
 > Replace `<your-client-id>` with your GitHub App Client ID
+
 > Replace `<your-client-secret>` with your GitHub App Client Secret
 
 
@@ -333,6 +346,15 @@ Create: [argocd-github-secret.yaml](argocd-github-secret.yaml)
 Create: [argocd-github-cm.yaml](argocd-github-cm.yaml)
 
 > Replace `<your-argocd-url>` with your ArgoCD URL (http://<instance_public_ip>:8080)
+
+> Replace `<your-github-org>` with your GitHub Organisation name
+
+`argocd-cm` rbac:
+
+Create: [argocd-github-rbac.yaml](argocd-github-rbac.yaml)
+
+> Replace `<your-github-org>` with your GitHub Organisation.
+
 
 ### Hands-On: Enable GitHub SSO
 
@@ -348,13 +370,19 @@ Create: [argocd-github-cm.yaml](argocd-github-cm.yaml)
   kubectl apply -f argocd-github-cm.yaml
   ```
 
+* Apply RBAC:
+
+  ```bash
+  kubectl apply -f argocd-github-rbac.yaml
+  ```
+
 * Restart ArgoCD server to apply changes
 
   ```bash
   kubectl rollout restart -n argocd deployment argocd-server
   ```
 
-* Forward the `argocd-server` service again, because it is restarted, so you need to do port-forward again:
+* Forward the `argocd-server` service again, because it is restarted, so you need to do port-forward again (typical kind cluster behaviour 🥲):
 
   ```bash
   kubectl port-forward -n argocd svc/argocd-server 8080:443 --address=0.0.0.0 &
@@ -368,7 +396,9 @@ Create: [argocd-github-cm.yaml](argocd-github-cm.yaml)
 
   ![github-login](output_images/image-15.png)
 
-* Sign In, It will redirect back to ArgoCD UI.
+* Sign In, It will redirect you to authorize, grant the access for created `organisation` and autorize.
+
+  ![grant-org](output_images/image-20.png)
 
 * You should be logged in to ArgoCD as your GitHub username.
 
@@ -384,22 +414,15 @@ Create: [argocd-github-cm.yaml](argocd-github-cm.yaml)
 
   ![login-success](output_images/image-17.png)
 
-* Now you can manage access using your GitHub user(For me i.e: amitabhdevops2024@gmail.com - use your own shown in `User Info`) in RBAC policy.
+* Try to add repo and create application (online_shop), check whether you can do it or not:
+  
+  * I have connected repo `argocd-demos` that we are using in this course.
 
-  * For example, to give `admin` role to your GitHub user, update `argocd-rbac-cm.yaml`:
+    ![add-repo](output_images/image-21.png)
 
-    ```yaml
-    g, amitabhdevops2024@gmail.com, role:admin
-    ```
+    ![create-app-2](output_images/image-22.png)
 
-  * Apply the updated RBAC config:
 
-    ```bash
-    kubectl apply -f argocd-rbac-cm.yaml
-    ```
-
-  * Now you have admin access as you are mapped to `role:admin`.
-  * You can verify in ArgoCD UI, you should have admin privileges.
 
 **Best Practices:**
 - Use HTTPS for all URLs
