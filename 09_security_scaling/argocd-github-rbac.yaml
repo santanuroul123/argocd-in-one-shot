@@ -4,23 +4,23 @@ metadata:
   name: argocd-rbac-cm
   namespace: argocd
 data:
-  scopes: '[groups, email]'
+  scopes: '[groups, email]' # Specify the OIDC scopes to request from the identity provider
 
   policy.csv: |
-    # Define admin/operator permissions
+    # Define admin/operator permissions for repo-admin role
     p, role:repo-admin, applications, create, */*, allow
-    p, role:repo-admin, applications, get,    */*, allow
-    p, role:repo-admin, applications, update, */*, allow
-    p, role:repo-admin, applications, sync,   */*, allow
-    p, role:repo-admin, applications, delete, */*, allow
-    p, role:repo-admin, repositories, create, */*, allow
-    p, role:repo-admin, repositories, *, */*, allow
-    p, role:repo-admin, projects, *, *, allow
+    p, role:repo-admin, applications, get,    */*, allow  
+    p, role:repo-admin, applications, update, */*, allow   
+    p, role:repo-admin, applications, sync,   */*, allow   
+    p, role:repo-admin, applications, delete, */*, allow   
+    p, role:repo-admin, repositories, create, */*, allow   
+    p, role:repo-admin, repositories, *, */*, allow        
+    p, role:repo-admin, projects, *, *, allow              
 
     # Bind by email (fallback)
-    g, <your-github-email>, role:repo-admin
+    g, <your-github-email>, role:repo-admin                
 
     # Keep org binding for when it works
-    g, <your-github-org>:members, role:repo-admin
+    g, <your-github-org>:members, role:repo-admin         
 
-  policy.default: role:readonly
+  policy.default: role:readonly # Set default role to readonly for all other users

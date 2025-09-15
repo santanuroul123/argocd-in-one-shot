@@ -4,17 +4,19 @@ metadata:
   name: argocd-cm
   namespace: argocd
   labels:
-    app.kubernetes.io/name: argocd-cm
-    app.kubernetes.io/part-of: argocd
+    app.kubernetes.io/name: argocd-cm  # Label for identifying the ConfigMap
+    app.kubernetes.io/part-of: argocd  # Label indicating this ConfigMap is part of ArgoCD
 data:
+  # The ArgoCD server URL
   url: https://<your-argocd-url>:8080
+  # Dex configuration for authentication
   dex.config: |
     connectors:
-    - type: github
-      id: github
-      name: GitHub
+    - type: github                # Use GitHub as the identity provider
+      id: github                  # Connector ID
+      name: GitHub                # Display name
       config:
-        clientID: $dex.github.clientId
-        clientSecret: $dex.github.clientSecret
+        clientID: $dex.github.clientId         # GitHub OAuth app client ID (from secret)
+        clientSecret: $dex.github.clientSecret # GitHub OAuth app client secret (from secret)
         orgs:
-        - name: <your-github-org>
+        - name: <your-github-org> # GitHub organization allowed to authenticate
