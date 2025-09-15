@@ -289,6 +289,10 @@ Read & Try: [SSO](github_sso.md)
 
 ## 4. Scaling ArgoCD for High Availability (HA)
 
+Argo CD is largely stateless. All data is persisted as Kubernetes objects, which in turn is stored in Kubernetes' etcd. Redis is only used as a throw-away cache and can be lost. When lost, it will be rebuilt without loss of service.
+
+A set of [HA manifests](https://github.com/argoproj/argo-cd/tree/stable/manifests/ha) are provided for users who wish to run Argo CD in a highly available manner. This runs more containers, and runs Redis in HA mode.
+
 ### Why HA?
 
 - **Prevents single points of failure**
@@ -307,7 +311,6 @@ Read & Try: [SSO](github_sso.md)
 
 **Official HA Manifests:**
 ```bash
-kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
 ```
 
@@ -321,26 +324,44 @@ kubectl -n argocd scale statefulset argocd-application-controller --replicas=2
 
 ### Hands-On: Deploy HA ArgoCD
 
-```bash
-# Deploy ArgoCD in HA mode
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
+Make sure your `kind` Cluster is Running and the `ArgoCD` Server is Installed using `Manifests` method not `Helm`, if you installed using HELM, then you will face `crashloopbackoff` error, because there is no Direct method to install `HA` using `Helm`. So delete cluster if you installed using Helm, then again install using Manifests.
 
-# Wait for all pods to be ready
-kubectl wait --for=condition=Ready pods --all -n argocd --timeout=300s
+* Deploy ArgoCD in HA mode using manifest:
 
-# Verify HA deployment
-kubectl get pods -n argocd
-kubectl get svc -n argocd
+  ```bash
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
+  ```
 
-# Check if Redis HA is running
-kubectl get pods -n argocd | grep redis
+* Verify HA deployment
 
-# Scale server replicas
-kubectl -n argocd scale deployment argocd-server --replicas=3
+  ```bash
+  kubectl get pods -n argocd
+  kubectl get svc -n argocd
+  ```
 
-# Verify scaling
-kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server
-```
+  ![ha-svc-pods](output_images/image-25.png)
+
+* Check if Redis HA is running
+
+  ```bash
+  kubectl get pods -n argocd | grep redis
+  ```
+
+  ![redis](output_images/image-26.png)
+
+* Scale server replicas
+
+  ```bash
+  kubectl -n argocd scale deployment argocd-server --replicas=3
+  ```
+
+  > Check using: `kubectl get deployment -n argocd`
+
+* Verify scaling
+
+  ```bash
+  kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server
+  ```
 
 **Helm HA Configuration:**
 
@@ -366,13 +387,14 @@ redis-ha:
 - **External Database** - Use managed PostgreSQL for large deployments
 - **Load Balancer** - Use proper ingress for the API server
 
+Read more: [High-Availability](https://argo-cd.readthedocs.io/en/latest/operator-manual/high_availability/)
+
 ---
 
 ## 5. GitOps Best Practices for Enterprises
 
 ### Security Practices
 
-- **Disable admin user** after initial setup
 - **Use SSO only** - No local passwords in production
 - **TLS everywhere** - Secure all communications
 - **Secret management** - Use Vault, Sealed Secrets, or External Secrets
@@ -392,111 +414,8 @@ redis-ha:
 - **Git as single source of truth** - All configurations in Git
 - **PR-based workflows** - Enforce code reviews
 - **Environment promotion** - dev → staging → prod
-- **Monitoring and alerting** - Comprehensive observability
+- **Monitoring and alerting** - Comprehensive observability (Prometheus, Grafana)
 - **Disaster recovery** - Regular backups and tested restore procedures
-- **Policy as Code** - Use OPA Gatekeeper for governance
-
-### Hands-On: Enterprise Setup Example
-
-```bash
-# Create AppProject for team isolation
-kubectl apply -f - <<EOF
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: team-a
-  namespace: argocd
-spec:
-  description: Team A Project
-  sourceRepos:
-  - 'https://github.com/team-a/*'
-  destinations:
-  - namespace: 'team-a-*'
-    server: 'https://kubernetes.default.svc'
-  clusterResourceWhitelist:
-  - group: ''
-    kind: Namespace
-  roles:
-  - name: team-a-developers
-    description: Developers for Team A
-    policies:
-    - p, proj:team-a:team-a-developers, applications, *, team-a/*, allow
-    groups:
-    - my-org:team-a-devs
-EOF
-
-# Apply resource quotas
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: ResourceQuota
-metadata:
-  name: team-a-quota
-  namespace: team-a-prod
-spec:
-  hard:
-    requests.cpu: "10"
-    requests.memory: 20Gi
-    limits.cpu: "20"
-    limits.memory: 40Gi
-    persistentvolumeclaims: "10"
-EOF
-```
-
-***
-
-## 6. Validation and Testing
-
-### Test RBAC Policies
-
-```bash
-# Validate RBAC configuration
-argocd admin settings rbac validate --policy-file rbac-policy.csv
-
-# Test specific permissions
-argocd admin settings rbac can alice get applications "myproject/*"
-argocd admin settings rbac can alice sync applications "myproject/*"
-argocd admin settings rbac can bob get applications "*"
-```
-
-### Test SSO Integration
-
-```bash
-# Check Dex configuration
-kubectl logs -n argocd deployment/argocd-server | grep -i dex
-
-# Test OAuth flow
-curl -k "https://argocd.example.com/api/dex/auth/github"
-
-# Verify user groups are mapped correctly
-argocd admin settings rbac can "my-org:team-a-devs" sync applications "team-a/*"
-```
-
-### Verify HA Setup
-
-```bash
-# Check all components are running with multiple replicas
-kubectl get pods -n argocd
-
-# Test failover by deleting one replica
-kubectl delete pod -n argocd $(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o jsonpath='{.items[0].metadata.name}')
-
-# Verify service is still accessible
-kubectl get svc -n argocd argocd-server
-```
-
-***
-
-## 7. Key Takeaways
-
-- **Disable admin user** after initial configuration for security
-- **Use local users** only for small teams or automation
-- **Implement SSO** for enterprise environments with proper group mapping
-- **Deploy HA** for production with proper resource allocation
-- **Follow GitOps best practices** for security, scalability, and operational excellence
-- **Test RBAC policies** before applying to production
-- **Monitor and audit** all ArgoCD activities
-
-With these configurations, your ArgoCD deployment becomes **secure, scalable, and enterprise-ready** following official best practices and recommendations.
 
 ---
 
