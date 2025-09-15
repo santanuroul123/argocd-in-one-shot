@@ -4,7 +4,7 @@ metadata:
   name: argocd-rbac-cm
   namespace: argocd
 data:
-  scopes: '[groups, email]'  # Ensure ArgoCD checks the 'groups' claim
+  scopes: '[groups, email]'
 
   policy.csv: |
     # Define admin/operator permissions
@@ -17,8 +17,12 @@ data:
     p, role:repo-admin, repositories, *, */*, allow
     p, role:repo-admin, projects, *, *, allow
 
-    # Bind org members (replace 'your-org-name')
-    # g, <your-github-org>:members, role:repo-admin
-    g, tws-argocd:members, role:repo-admin
+    # Bind by email (fallback)
+    g, <your-github-email>, role:repo-admin
+    g, amitabhdevops2024@gmail.com, role:repo-admin
+
+    # Keep org binding for when it works
+    g, <your-github-org>:members, role:repo-admin
+    # g, tws-argocd:members, role:repo-admin
 
   policy.default: role:readonly

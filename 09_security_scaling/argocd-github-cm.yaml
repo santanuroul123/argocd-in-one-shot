@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   # url: https://<your-argocd-url>:8080
-  url: https://34.244.129.242:8080
+  url: https://3.250.37.206:8080
   dex.config: |
     connectors:
     - type: github
