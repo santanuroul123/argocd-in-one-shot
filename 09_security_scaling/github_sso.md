@@ -26,7 +26,7 @@ Dex is a built-in OIDC identity service bundled with ArgoCD, used when you want 
 - Authorization callback URL: `https://<instance_public_url>:8080/api/dex/callback`
 - Then click on `Register Application`
 
-> Replace `<instance_public_url>` with your instance public ip, where argocd is running.
+> Replace `<instance_public_url>` with your instance public ip.
 
   ![rg-app](output_images/image-12.png)
 
@@ -49,11 +49,11 @@ Dex is a built-in OIDC identity service bundled with ArgoCD, used when you want 
   
   > Organisation name should be unique, create accordingly and note it.
 
-- Skip this step for now, you can add more people to this organisation.
+- Skip below step for now, you can add more people to this organisation.
 
   ![skip](output_images/image-19.png)
 
-- Make your organisation visiblity `public` by going in `<your_org>/people` and make it public.
+- Make your visibility in organisation is `public` by going in `<your_org>/people` and make it public.
   
   ![alt text](output_images/image-23.png)
 
@@ -68,30 +68,30 @@ Dex is a built-in OIDC identity service bundled with ArgoCD, used when you want 
 > Install & Run both using: [README.md](../03_setup_installation/README.md) or Run [setup_argocd.sh](../03_setup_installation/setup_argocd.sh), do not go to ArgoCD server (UI) for now.
 
 
-`argocd-secret`:
+1. `argocd-secret`:
 
-Create: [argocd-github-secret.yaml](argocd-github-secret.yaml)
+    Create: [argocd-github-secret.yaml](argocd-github-secret.yaml)
 
-> Replace `<your-client-id>` with your GitHub App Client ID
+    > Replace `<your-client-id>` with your GitHub App Client ID
 
-> Replace `<your-client-secret>` with your GitHub App Client Secret
+    > Replace `<your-client-secret>` with your GitHub App Client Secret
 
 
-`argocd-cm` ConfigMap:
+2. `argocd-cm` ConfigMap:
 
-Create: [argocd-github-cm.yaml](argocd-github-cm.yaml)
+    Create: [argocd-github-cm.yaml](argocd-github-cm.yaml)
 
-> Replace `<instance_public_ip>` with your instance public ip on which your ArgoCD is running.
+    > Replace `<instance_public_ip>` with your instance public ip on which your ArgoCD is running.
 
-> Replace `<your-github-org>` with your GitHub Organisation name
+    > Replace `<your-github-org>` with your GitHub Organisation name
 
-`argocd-cm` rbac:
+3. `argocd-cm` rbac:
 
-Create: [argocd-github-rbac.yaml](argocd-github-rbac.yaml)
+    Create: [argocd-github-rbac.yaml](argocd-github-rbac.yaml)
 
-> Replace `<your-github-org>` with your GitHub Organisation.
+    > Replace `<your-github-org>` with your GitHub Organisation.
 
-> Replace `<your-github-email>` with your GitHub Account email.
+    > Replace `<your-github-email>` with your GitHub Account email.
 
 ---
 
@@ -139,7 +139,7 @@ Create: [argocd-github-rbac.yaml](argocd-github-rbac.yaml)
 
   ![grant-org](output_images/image-20.png)
 
-  > If you are not above page, do clear browser cache and history, and if any user is showing in created app, do revoke all of them, shown in below image, then you will get above page to grant access to `organisation`:
+  > If you are not getting above page, then do clear browser cache and history, and if any user is showing in created app, do revoke all of them, shown in below image, then you will getting above page to grant access to created `organisation`:
   >
   >  ![authrize-image](output_images/image-24.png)
 
@@ -155,15 +155,15 @@ Create: [argocd-github-rbac.yaml](argocd-github-rbac.yaml)
   kubectl logs -n argocd deployment/argocd-server | grep -i "login successful"
   ```
 
-  ![login-success](output_images/image-17.png)
-
 * Try to add repo and create application (online_shop), check whether you can do it or not:
   
-  * I have connected repo `argocd-demos` that we are using in this course, path - `monitoring/online_shop`.
+  * I have connected repo `argocd-demos` that we are using in this course.
 
     ![add-repo](output_images/image-21.png)
 
-    ![create-app-2](output_images/image-22.png)
+    Path for manifest: `monitoring/online_shop`
+
+      ![create-app-2](output_images/image-22.png)
 
   * You should be able to add repo and create application.
 
