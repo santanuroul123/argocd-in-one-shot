@@ -49,36 +49,9 @@ Projects can have multiple roles, and those roles can have different access gran
 
 ### 1. Review the Project Manifest
 
-**project.yml**
+Use: [project.yml](project.yml)
 
 You can remove the comments while trying - using ChatGPT, it is just for your understanding:
-
-```yaml
-apiVersion: argoproj.io/v1alpha1 # API version for ArgoCD Projects
-kind: AppProject               # Kind is always AppProject for Projects
-metadata:
-  name: frontend-team          # Name of the Project (unique within ArgoCD)
-  namespace: argocd            # Must always be created in ArgoCD's namespace
-spec:
-  description: Project for frontend team apps   # Optional description
-  sourceRepos:                 # Which Git repos are allowed for this Project
-    - https://github.com/<your-username>/argocd-demos.git
-  destinations:                # Which clusters/namespaces apps in this Project can target
-    - namespace: frontend
-      server: <added_argocd_cluster_server_url>  # Target cluster server url
-  clusterResourceWhitelist:    # Which cluster-wide resources are allowed (e.g., CRDs)
-    - group: "*"               # '*' means allow all groups
-      kind: "*"                # '*' means allow all kinds
-  namespaceResourceWhitelist:  # Which namespace-level resources are allowed
-    - group: "*"               # Here also allowing everything
-      kind: "*"
-  roles:                       # Define roles for RBAC within this Project
-    - name: frontend-admins    # Role name  
-      description: Admins for frontend team
-      policies:                # Policies associated with this role
-        # syntax: - p, proj:<project-name>:<role-name>, applications, <action>, <project>/<app-name>, permission(allow|deny)
-        - p, proj:frontend-team:frontend-admins, applications, *, frontend-team/*, allow  # Full access to all apps in this Project, Here p = policy, proj = project, applications = resource, * = action (all actions), frontend-team/* = resource name pattern, allow = effect (allow or deny)
-```
 
 > Replace `<your-username>` with your GitHub username.
 
@@ -123,32 +96,9 @@ frontend-team  Project for frontend team apps  https://172.31.19.178:33893,front
 
 ### 4. Create an Application Under the Project
 
-`nginx_app.yml`:
+Use: [nginx_app.yml](nginx_app.yml)
 
 You can remove the comments while trying - using ChatGPT, it is just for your understanding:
-
-```yaml
-apiVersion: argoproj.io/v1alpha1 # ArgoCD Application resource
-kind: Application               # Kind of resource
-metadata:                        # Metadata section                         
-  name: nginx-frontend          # App name
-  namespace: argocd             # Must exist in ArgoCD namespace
-spec:
-  project: frontend-team        # Assigns app to the frontend-team Project
-  source:
-    repoURL: https://github.com/<your-username>/argocd-demos.git  # Git repo
-    targetRevision: main        # Branch to watch
-    path: ui_approach/nginx     # Path in repo with manifests
-  destination:
-    server: <added_argocd_cluster_server_url>  # Target cluster
-    namespace: frontend          # Namespace inside that cluster
-  syncPolicy:                    # Sync policy settings
-    automated:                   # Enable automated sync
-      prune: true                 # Delete resources removed from Git
-      selfHeal: true              # Correct drift if resources change in cluster
-    syncOptions:                 # Additional sync options
-      - CreateNamespace=true      # Auto-create namespace if it doesn't exist
-```
 
 > Replace `<your-username>` with your GitHub username.
 
