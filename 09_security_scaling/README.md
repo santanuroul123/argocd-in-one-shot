@@ -285,6 +285,8 @@ Read & Try: [SSO](github_sso.md)
 
 > For this, delete the kind cluster running and & ArgoCD setup, if you use existing setup - that can cause issue in sso setup in that guide. Follow that guide as it is (do not create anything - just follow that).
 
+---
+
 ## 4. Scaling ArgoCD for High Availability (HA)
 
 ### Why HA?
