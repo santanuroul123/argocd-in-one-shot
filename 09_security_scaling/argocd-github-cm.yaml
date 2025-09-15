@@ -7,8 +7,7 @@ metadata:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
 data:
-  # url: https://<your-argocd-url>:8080
-  url: https://3.250.37.206:8080
+  url: https://<your-argocd-url>:8080
   dex.config: |
     connectors:
     - type: github
@@ -18,5 +17,4 @@ data:
         clientID: $dex.github.clientId
         clientSecret: $dex.github.clientSecret
         orgs:
-        # - name: <your-github-org> 
-        - name: tws-argocd 
+        - name: <your-github-org>

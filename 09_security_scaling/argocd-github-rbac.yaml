@@ -19,10 +19,8 @@ data:
 
     # Bind by email (fallback)
     g, <your-github-email>, role:repo-admin
-    g, amitabhdevops2024@gmail.com, role:repo-admin
 
     # Keep org binding for when it works
     g, <your-github-org>:members, role:repo-admin
-    # g, tws-argocd:members, role:repo-admin
 
   policy.default: role:readonly
