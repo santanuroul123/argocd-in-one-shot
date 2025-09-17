@@ -44,7 +44,7 @@ Before starting, ensure you have the following installed on your system:
 
 ---
 
-> [!NOTE]
+> [!IMPORTANT]
 > 
 > You can either follow the below steps or directly run the script [setup_argocd.sh](./setup_argocd.sh)
 > 
