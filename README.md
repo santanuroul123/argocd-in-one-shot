@@ -107,4 +107,4 @@ For questions, reach out via [GitHub Issues](https://github.com/LondheShubham153
 
 Linkedin: [Shubham Londhe](https://linkedin.com/in/shubhamlondhe1996)
 
-Discord: [TrainWithShubhamd](https://discord.gg/wmtaqTUmhW)
+Discord: [TrainWithShubham](https://discord.gg/wmtaqTUmhW)
