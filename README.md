@@ -1,151 +1,108 @@
-# argocd-in-one-shot
+# ArgoCD-in-one-shot
 
-ArgoCD In One Shot is your one stop solution to learn and implement ArgoCD from Zero to Hero in DevOps
+ArgoCD In One Shot is your one-stop solution to learn and implement ArgoCD from Zero to Hero in DevOps and other ArgoProj.
 
-Below is complete syllabus for ArgoCD in One shot:
+## Repository Structure & Chapters
 
----
 
-## [Chapter 1: Intro to GitOps & ArgoCD (Beginner)](./01_intro_to_gitops_argocd/)
-
-- What is GitOps
-- GitOps Principles: Declarative, Versioned, Automated, Observable
-- GitOps vs Traditional CI/CD
+This repository is organized into chapters, each with hands-on examples, manifests, scripts, and images. Below is an overview of each chapter and the related directories or features you will find:
 
 ---
 
-## [Chapter 2: ArgoCD Basics (Beginner)](./02_argocd_basics/)
 
-- What is ArgoCD?
-- Why ArgoCD for GitOps?
-- ArgoCD vs Flux CD vs Jenkins X
-- **ArgoCD Architecture** (https://argo-cd.readthedocs.io/en/stable/assets/argocd_architecture.png)
-    - API Server
-    - Repo Server
-    - Application Controller
-    - UI/CLI
-- **Key ArgoCD Concepts:**
-    - Application
-    - Project
-    - Repositories
-    - Health Status (Healthy, Degraded, Progressing, Missing)
-    - Rollbacks
-    - Auto-Healing (demo: delete pod → ArgoCD restores)
-    - **Sync / Sync Policies**
-        - Manual
-        - Automatic
-        - Sync Waves
-        - Sync Hooks (PreSync, Sync, PostSync, SyncFail)
-        - Flags (`-prune`, `-replace`, etc.)
-    - Sync Options
-        - Skip Schema Validation
-        - Auto-Create Namespace
-        - Prune Last
-        - Apply Out of Sync Only
-        - Respect Ignore Differences
-        - Server-Side Apply
+### [01_intro_to_gitops_argocd/](./01_intro_to_gitops_argocd/)
+* Introduction to GitOps and ArgoCD principles
+* Start here to understand the foundation of GitOps workflows
 
----
 
-## [Chapter 3: Setup & Installation (Beginner)](./03_setup_installation/)
+### [02_argocd_basics/](./02_argocd_basics/)
+* Learn ArgoCD basics, architecture, and key concepts
+* Covers core components and how ArgoCD fits into GitOps
 
-- Prerequisites (KIND/EKS, kubectl, Helm, Git repo)
-- Installing ArgoCD on Kubernetes (kind)
-- Exposing ArgoCD and accessing it on the Browser
-- Logging in (UI + CLI walkthrough)
 
----
+### [03_setup_installation/](./03_setup_installation/)
+* Step-by-step guide to setting up and installing ArgoCD
+* Includes installation scripts and prerequisites
 
-## [Chapter 4: First App Deployment (Beginner)](./04_first_app_deployment/)
 
-- Deploying the first NGINX app via ArgoCD
-- Application CRD walkthrough(manifest file)
-- Manual Sync vs Auto Sync demo
-- Auto-healing demo (delete pod → auto restore)
-- Declarative GitOps workflow (change in Git → sync in ArgoCD)
+### [04_first_app_deployment/](./04_first_app_deployment/)
+* Deploy your first application with ArgoCD
+* Explore different deployment approaches: CLI, declarative, and UI (see subdirectories)
 
----
 
-## [Chapter 5: ArgoCD Features (Intermediate)](./05_argocd_features/)
+### [05_argocd_features/](./05_argocd_features/)
+* Dive into advanced ArgoCD features: Projects, App of Apps, ApplicationSets, Config Management, Multicluster
+* Related subdirectories demonstrate each feature with real manifests and examples
 
-- ArgoCD Projects (multi-team isolation + RBAC)
-- App of Apps pattern (managing multiple apps hierarchically)
-- Multi-cluster management (one ArgoCD → many clusters)
-- ApplicationSets (deploying apps across multiple clusters/environments)
-- Config Management:
-    - Helm integration
-    - Kustomize integration
-    - Jsonnet
 
----
+### [06_argocd_notifications/](./06_argocd_notifications/)
+* Learn about ArgoCD notifications and alerting integrations
+* Includes notification manifests and visual output examples
 
-## [Chapter 6: ArgoCD Notifications (Intermediate)](./06_argocd_notifications/)
 
-- Notification system overview
-- Integrating with Email
-- Demo: Email alert for app degraded and deployed
+### [07_argocd_image_updater/](./07_argocd_image_updater/)
+* Automate image updates in your GitOps workflow using ArgoCD Image Updater
+* See real-world updater manifests and update flows
+
+
+### [08_monitoring_the_argocd/](./08_monitoring_the_argocd/)
+* Monitor ArgoCD using Prometheus and Grafana
+* Find monitoring manifests and dashboard examples
+
+
+### [09_security_scaling/](./09_security_scaling/)
+* Secure and scale ArgoCD: RBAC, SSO, and best practices
+* Includes RBAC/SSO configuration and scaling examples
+
+
+### [10_argo_rollouts/](./10_argo_rollouts/)
+* Progressive delivery with Argo Rollouts: Canary and Blue/Green deployments
+* Explore rollout strategies and manifests
+
+
+### [11_argo_workflows/](./11_argo_workflows/)
+* Orchestrate complex workflows with Argo Workflows (K8s-native CI engine)
+* Includes workflow concepts, install scripts, and sample pipelines
+
+
+### [12_argo_events/](./12_argo_events/)
+* Trigger workflows and automate pipelines using Argo Events
+* Find event source and sensor examples
+
+
+### [13_real_world_end_to_end_project/](./13_real_world_end_to_end_project/)
+* Real-world end-to-end project: see all concepts in action
+
+
+### [14_interview_questions_industry_use_cases/](./14_interview_questions_industry_use_cases/)
+* Interview questions and industry use cases for ArgoCD and GitOps
 
 ---
 
-## [Chapter 7: ArgoCD Image Updater (Advanced)](./07_argocd_image_updater/)
+## How to Use This Repo
 
-- What is Image Updater?
-- Automating image version updates in Git
-- Demo: Auto-update app image → Git commit → ArgoCD sync
-
----
-
-## [Chapter 8: Monitoring the ArgoCD (Advanced)](./08_monitoring_the_argocd/)
-
-- Observability with Prometheus + Grafana
-- Example dashboards:
-    - Sync success/failure
-    - Application health trends
+1. **Start from Chapter 1** and follow the README in each folder.
+2. Use the provided manifests and scripts for hands-on practice.
+3. Each chapter builds on the previous one, covering beginner to advanced topics.
 
 ---
 
-## [Chapter 9: Security & Scaling (Advanced)](./09_security_scaling/)
+## Highlights
 
-- RBAC in ArgoCD (role-based access control)
-- SSO with Dex/OIDC (GitHub, Google, LDAP)
-- Scaling ArgoCD for high availability (HA setup)
-- GitOps best practices for enterprises
-
----
-
-## [Chapter 10: Argo Rollouts (Intermediate)](./10_argo_rollouts/)
-
-- What is Argo Rollouts?
-- Canary & Blue/Green deployments with ArgoCD
-- Demo: Canary → Rollback
+- Covers ArgoProj, GitOps, ArgoCD basics, advanced features, notifications, image updater, monitoring, security, rollouts, workflows, events, and real-world projects.
+- All chapters are self-contained with clear instructions and examples.
+- Suitable for beginners and experienced DevOps engineers.
 
 ---
 
-## [Chapter 11: Argo Workflows (Intermediate)](./11_argo_workflows/)
+## Contributing
 
-- What is Argo Workflows? (K8s-native CI engine)
-- Defining workflows (build → test → deploy)
-
----
-
-## [Chapter 12: Argo Events (Intermediate)](./12_argo_events/)
-
-- Argo-Workflow trigger using Argo Events
+Contributions, suggestions, and improvements are welcome! Please open an issue or submit a pull request.
 
 ---
 
-## [Chapter 13: Real-World End-to-End Project (Advanced)](./13_real_world_end_to_end_project/)
+## Contact
 
-- K8s to prod application (https://youtu.be/Y8oFew4MfqA?si=lXheLSVcIbx8kFQT)
+For questions, reach out via [GitHub Issues](https://github.com/LondheShubham153/argocd-in-one-shot/issues).
 
----
-
-## [Chapter 14: Interview Questions & Industry Use Cases (Mixed)](./14_interview_questions_industry_use_cases/)
-
-- Common Interview Q&A:
-    - Difference between ArgoCD and Flux?
-    - Explain Sync Waves, Hooks, Flags.
-    - How does ArgoCD auto-healing work?
-    - How do you do Canary deployment with Argo?
-    - How to manage secrets in GitOps (Vault, Sealed Secrets, SOPS)?
-    - scenario-based and etc…
+Linkedin: [Shubham Londhe](https://linkedin.com/in/shubhamlondhe1996)
