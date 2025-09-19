@@ -10,71 +10,71 @@ This repository is organized into chapters, each with hands-on examples, manifes
 ---
 
 
-### [01_intro_to_gitops_argocd/](./01_intro_to_gitops_argocd/)
+### [01_intro_to_gitops_argocd](./01_intro_to_gitops_argocd/)
 * Introduction to GitOps and ArgoCD principles
 * Start here to understand the foundation of GitOps workflows
 
 
-### [02_argocd_basics/](./02_argocd_basics/)
+### [02_argocd_basics](./02_argocd_basics/)
 * Learn ArgoCD basics, architecture, and key concepts
 * Covers core components and how ArgoCD fits into GitOps
 
 
-### [03_setup_installation/](./03_setup_installation/)
+### [03_setup_installation](./03_setup_installation/)
 * Step-by-step guide to setting up and installing ArgoCD
 * Includes installation scripts and prerequisites
 
 
-### [04_first_app_deployment/](./04_first_app_deployment/)
+### [04_first_app_deployment](./04_first_app_deployment/)
 * Deploy your first application with ArgoCD
 * Explore different deployment approaches: CLI, declarative, and UI (see subdirectories)
 
 
-### [05_argocd_features/](./05_argocd_features/)
+### [05_argocd_features](./05_argocd_features/)
 * Dive into advanced ArgoCD features: Projects, App of Apps, ApplicationSets, Config Management, Multicluster
 * Related subdirectories demonstrate each feature with real manifests and examples
 
 
-### [06_argocd_notifications/](./06_argocd_notifications/)
+### [06_argocd_notifications](./06_argocd_notifications/)
 * Learn about ArgoCD notifications and alerting integrations
 * Includes notification manifests and visual output examples
 
 
-### [07_argocd_image_updater/](./07_argocd_image_updater/)
+### [07_argocd_image_updater](./07_argocd_image_updater/)
 * Automate image updates in your GitOps workflow using ArgoCD Image Updater
 * See real-world updater manifests and update flows
 
 
-### [08_monitoring_the_argocd/](./08_monitoring_the_argocd/)
+### [08_monitoring_the_argocd](./08_monitoring_the_argocd/)
 * Monitor ArgoCD using Prometheus and Grafana
 * Find monitoring manifests and dashboard examples
 
 
-### [09_security_scaling/](./09_security_scaling/)
+### [09_security_scaling](./09_security_scaling/)
 * Secure and scale ArgoCD: RBAC, SSO, and best practices
 * Includes RBAC/SSO configuration and scaling examples
 
 
-### [10_argo_rollouts/](./10_argo_rollouts/)
+### [10_argo_rollouts](./10_argo_rollouts/)
 * Progressive delivery with Argo Rollouts: Canary and Blue/Green deployments
 * Explore rollout strategies and manifests
 
 
-### [11_argo_workflows/](./11_argo_workflows/)
+### [11_argo_workflows](./11_argo_workflows/)
 * Orchestrate complex workflows with Argo Workflows (K8s-native CI engine)
 * Includes workflow concepts, install scripts, and sample pipelines
 
 
-### [12_argo_events/](./12_argo_events/)
+### [12_argo_events](./12_argo_events/)
 * Trigger workflows and automate pipelines using Argo Events
 * Find event source and sensor examples
 
 
-### [13_real_world_end_to_end_project/](./13_real_world_end_to_end_project/)
+### [13_real_world_end_to_end_project](./13_real_world_end_to_end_project/)
 * Real-world end-to-end project: see all concepts in action
 
 
-### [14_interview_questions_industry_use_cases/](./14_interview_questions_industry_use_cases/)
+### [14_interview_questions_industry_use_cases](./14_interview_questions_industry_use_cases/)
 * Interview questions and industry use cases for ArgoCD and GitOps
 
 ---
@@ -106,3 +106,5 @@ Contributions, suggestions, and improvements are welcome! Please open an issue o
 For questions, reach out via [GitHub Issues](https://github.com/LondheShubham153/argocd-in-one-shot/issues).
 
 Linkedin: [Shubham Londhe](https://linkedin.com/in/shubhamlondhe1996)
+
+Discord: [TrainWithShubhamd](https://discord.gg/wmtaqTUmhW)
