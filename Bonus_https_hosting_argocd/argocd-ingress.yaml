@@ -8,6 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
   rules:
@@ -23,5 +24,5 @@ spec:
               name: https
   tls:
   - hosts:
-    - argocd.yourdomain.com  # Replace with your domain
+    - argocd.letsdeployit.com  # Replace with your domain
     secretName: argocd-server-tls
