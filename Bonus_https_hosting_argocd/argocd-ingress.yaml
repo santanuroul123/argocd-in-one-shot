@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: argocd.letsdeployit.com  # Replace with your domain
+  - host: argocd.yourdomain.com  # Replace with your domain
     http:
       paths:
       - path: /
@@ -23,5 +23,5 @@ spec:
               name: https
   tls:
   - hosts:
-    - argocd.letsdeployit.com  # Replace with your domain
+    - argocd.yourdomain.com  # Replace with your domain
     secretName: argocd-server-tls # Name of the TLS secret to be created by cert-manager

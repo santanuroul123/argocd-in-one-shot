@@ -162,14 +162,16 @@ eksctl create nodegroup \
 
 ### Step 9: Configure Let's Encrypt and HTTPS
 
-1. Update `letsencrypt-issuer.yaml` with your email and domain.
+1. Create [letsencrypt-issuer.yaml](letsencrypt-issuer.yaml) with your email (replace `<your-email@example.com>` with your actual email).
 2. Apply Let's Encrypt issuer (update email in letsencrypt-issuer.yaml first)
 
     ```bash
     kubectl apply -f letsencrypt-issuer.yaml
     ```
 
-3. Apply ArgoCD ingress with SSL
+3. Create [argocd-ingress.yaml](argocd-ingress.yaml) with your domain (replace `argocd.yourdomain.com` with your actual domain).
+
+4. Apply ArgoCD ingress with SSL
 
     ```bash
     kubectl apply -f argocd-ingress.yaml
@@ -187,7 +189,7 @@ eksctl create nodegroup \
     ![alb-url](output_images/image-8.png)
 
 
-2. Point your domain `argocd.yourdomain.com` to this load balancer in DNS as a CNAME record
+2. Point your domain `argocd.yourdomain.com` (replace with your actual domain) to this load balancer in DNS of your domain as a CNAME record
 
     ![cname-adding](output_images/image-3.png)
 
@@ -197,19 +199,34 @@ eksctl create nodegroup \
 
 After applying the ingress, cert-manager will automatically request a Let's Encrypt certificate:
 
-```bash
-# Check certificate request status
-kubectl get certificate -n argocd
+1. Check certificate request status
 
-# Check certificate details
-kubectl describe certificate argocd-server-tls -n argocd
+    ```bash
+    kubectl get certificate -n argocd
+    ```
 
-# Check cert-manager logs if issues
-kubectl logs -n cert-manager deployment/cert-manager
+    ![cert](output_images/image-12.png)
 
-# Verify the secret was created
-kubectl get secret argocd-server-tls -n argocd
-```
+2. Check certificate details
+
+    ```bash
+    kubectl describe certificate argocd-server-tls -n argocd
+    ```
+
+3. Check cert-manager logs if issues
+
+    ```bash
+    kubectl logs -n cert-manager deployment/cert-manager
+    ```
+
+4. Verify the secret was created
+
+    ```bash
+    kubectl get secret argocd-server-tls -n argocd
+    ```
+
+    ![cert-tls](output_images/image-13.png)
+
 
 The certificate should show `Ready: True` status. If not, check:
 - DNS is pointing to the load balancer
