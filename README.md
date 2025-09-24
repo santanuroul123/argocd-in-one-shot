@@ -54,6 +54,9 @@ This repository is organized into chapters, each with hands-on examples, manifes
 * Secure and scale ArgoCD: RBAC, SSO, and best practices
 * Includes RBAC/SSO configuration and scaling examples
 
+### [Bonus_https_hosting_argocd](./Bonus_https_hosting_argocd/)
+* Bonus: Host ArgoCD with HTTPS using Ingress and TLS
+* Step-by-step guide and manifests for secure hosting
 
 ### [10_argo_rollouts](./10_argo_rollouts/)
 * Progressive delivery with Argo Rollouts: Canary and Blue/Green deployments
