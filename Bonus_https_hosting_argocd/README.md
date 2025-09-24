@@ -2,7 +2,7 @@
 
 This directory contains everything needed to set up ArgoCD with HTTPS domain support on AWS EKS.
 
-## 📁 Directory Structure
+## Directory Structure
 
 ```
 Bonus_https_hosting_argocd/
@@ -17,7 +17,7 @@ Bonus_https_hosting_argocd/
     └── outputs.tf         # Output values
 ```
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before starting, ensure you have:
 
@@ -26,7 +26,7 @@ Before starting, ensure you have:
    aws configure
    ```
 
-2. **Terraform** installed (>= 1.0)
+2. **Terraform** installed (>= 1.0) (Use Linux: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
    ```bash
    terraform --version
    ```
@@ -36,7 +36,7 @@ Before starting, ensure you have:
    kubectl version --client
    ```
 
-5. **Domain name** registered and managed in Route 53 (for HTTPS setup)
+5. **Domain name** 
 
 ## 🚀 Quick Start
 
@@ -58,7 +58,7 @@ The script will:
 - ✅ Show cost estimates (~$175-180/month)
 - ✅ Create EKS cluster in `eu-west-1`
 - ✅ Set up VPC with public/private subnets
-- ✅ Configure 2x t3.medium worker nodes
+- ✅ Configure 2x t2.micro worker nodes
 
 ### 2. Connect to Cluster
 
