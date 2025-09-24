@@ -8,7 +8,7 @@ Read more: [HTTPS](https://argo-cd.readthedocs.io/en/stable/operator-manual/ingr
 
 ## Prerequisites
 
-- Running Kubernetes cluster
+- Running EKS cluster
 - ArgoCD installed and running
 - Domain name 
 
