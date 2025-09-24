@@ -243,9 +243,9 @@ The certificate should show `Ready: True` status. If not, check:
 
 ### Access ArgoCD (after HTTPS setup):
 
-Open your browser in incognito mode (if you tried previously in normal mode or else use another browser if you still getting http) and navigate to `https://argocd.yourdomain.com`.
+Open your browser in incognito mode (if you tried previously in normal mode or else use another browser if you still getting `http`) and navigate to `https://argocd.yourdomain.com` (Replace `argocd.yourdomain.com` with your actual domain).
 
-- Access ArgoCD at `https://argocd.yourdomain.com`
+- Access ArgoCD at `https://argocd.yourdomain.com` (Replace with your actual domain)
 
   ![argocd-https](output_images/image-9.png)
 
