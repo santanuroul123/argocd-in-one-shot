@@ -2,14 +2,7 @@
 
 Simple step-by-step guide to set up ArgoCD with HTTPS domain support on AWS EKS using direct `eksctl` commands.
 
-## Directory
-
-```
-Bonus_https_hosting_argocd/
-├── argocd-ingress.yaml     # Ingress with cert-manager annotations
-├── letsencrypt-issuer.yaml # Let's Encrypt ClusterIssuer config
-└── README.md               # This documentation
-```
+---
 
 ## Prerequisites
 
@@ -21,12 +14,22 @@ Before starting, ensure you have:
    aws configure
    ```
 
+   ![aws-configure](output_images/image-2.png)
+
+    > Note: You need AWS Access Key ID and Secret Access Key with appropriate permissions to create and manage EKS clusters and related resources.
+  
 2. **eksctl** installed
 
    ```bash
    # Linux/WSL
    curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
    sudo mv /tmp/eksctl /usr/local/bin
+   ```
+
+   Check installation:
+
+   ```bash
+   eksctl version
    ```
 
 3. **kubectl** installed
@@ -52,7 +55,7 @@ Before starting, ensure you have:
 ### Step 1: Create EKS Cluster
 
 ```bash
-# Create EKS Cluster
+# Create EKS Cluster without node group
 eksctl create cluster --name argocd-cluster --region eu-west-1 --without-nodegroup
 ```
 
@@ -61,6 +64,10 @@ eksctl create cluster --name argocd-cluster --region eu-west-1 --without-nodegro
 ```bash
 eksctl get clusters --region eu-west-1
 ```
+
+![eks-cluster](output_images/image-4.png)
+
+![eks-cluster](output_images/image-5.png)
 
 ### Step 3: Associate IAM OIDC Provider
 
@@ -85,120 +92,108 @@ eksctl create nodegroup \
 
 ### Step 5: Verify Cluster Access
 
-```bash
-# Update kubeconfig
-aws eks update-kubeconfig --region eu-west-1 --name argocd-cluster
+1. Update kubeconfig
 
-# Verify nodes
-kubectl get nodes
-```
+    ```bash
+    aws eks update-kubeconfig --region eu-west-1 --name argocd-cluster
+    ```
+
+2. Verify nodes
+
+    ```bash
+    kubectl get nodes
+    ```
+
+    ![nodes](output_images/image-6.png)
+
+    ![nodes-ec2](output_images/image-7.png)
 
 ### Step 6: Install ArgoCD
 
-```bash
-# Create namespace
-kubectl create namespace argocd
+1. Create namespace
 
-# Install ArgoCD
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    ```bash
+    kubectl create namespace argocd
+    ```
 
-# Wait for pods to be ready
-kubectl wait --for=condition=ready pod --all -n argocd --timeout=300s
-```
+2. Install ArgoCD
+
+    ```bash
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    ```
+
+3. Wait for pods to be ready
+
+    ```bash
+    kubectl wait --for=condition=ready pod --all -n argocd --timeout=300s
+    ```
 
 ### Step 7: Install NGINX Ingress Controller
 
-```bash
-# Add Helm repository
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
+1. Add Helm repository
 
-# Install ingress controller
-helm install my-ingress-nginx ingress-nginx/ingress-nginx \
-  --namespace ingress-nginx \
-  --create-namespace \
-  --set controller.enableSSLPassthrough=true
-```
+    ```bash
+    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    helm repo update
+    ```
+
+2. Install ingress controller
+
+    ```bash
+    helm install my-ingress-nginx ingress-nginx/ingress-nginx \
+      --namespace ingress-nginx \
+      --create-namespace \
+      --set controller.enableSSLPassthrough=true
+    ```
 
 ### Step 8: Install cert-manager for SSL Certificates
 
-```bash
-# Install cert-manager
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml
+1. Install cert-manager
 
-# Wait for cert-manager to be ready
-kubectl wait --for=condition=ready pod -l app.kubernetes.io/instance=cert-manager -n cert-manager --timeout=300s
-```
+    ```bash
+    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml
+    ```
+
+2. Wait for cert-manager to be ready
+
+    ```bash
+    kubectl wait --for=condition=ready pod -l app.kubernetes.io/instance=cert-manager -n cert-manager --timeout=300s
+    ```
 
 ### Step 9: Configure Let's Encrypt and HTTPS
 
-```bash
-# Apply Let's Encrypt issuer (update email in letsencrypt-issuer.yaml first)
-kubectl apply -f letsencrypt-issuer.yaml
+1. Update `letsencrypt-issuer.yaml` with your email and domain.
+2. Apply Let's Encrypt issuer (update email in letsencrypt-issuer.yaml first)
 
-# Apply ArgoCD ingress with SSL
-kubectl apply -f argocd-ingress.yaml
-```
+    ```bash
+    kubectl apply -f letsencrypt-issuer.yaml
+    ```
+
+3. Apply ArgoCD ingress with SSL
+
+    ```bash
+    kubectl apply -f argocd-ingress.yaml
+    ```
 
 ### Step 10: Update DNS and Access ArgoCD
 
-```bash
-# Get the load balancer hostname(External IP)
-kubectl get svc -n ingress-nginx
+1. Get the load balancer hostname
 
-# Point your domain argocd.letsdeployit.com to this load balancer in DNS as a CNAME record
-```
+    ```bash
+    # Get the load balancer hostname (External IP)
+    kubectl get svc -n ingress-nginx
+    ```
 
-#### Production Access (after HTTPS setup):
-- Access ArgoCD at `https://argocd.yourdomain.com`
-- Username: `admin`
-- Password: Use the initial admin secret, then change it
+    ![alb-url](output_images/image-8.png)
 
-```bash
-# Get the initial admin password
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-```
 
-## 🗑️ Cleanup
+2. Point your domain `argocd.yourdomain.com` to this load balancer in DNS as a CNAME record
 
-To destroy the cluster and all resources:
+    ![cname-adding](output_images/image-3.png)
 
-```bash
-# Delete the entire cluster (this removes everything)
-eksctl delete cluster --name argocd-cluster --region eu-west-1
-```
+---
 
-This command will:
-- 🗑️ Delete all applications and pods
-- 🗑️ Remove node groups and EC2 instances  
-- 🗑️ Delete VPC, subnets, and networking components
-- �️ Remove load balancers and security groups
-- ⚡ Complete cleanup in 10-15 minutes
-
-## ⚡ Why eksctl over Terraform?
-
-**Benefits of using eksctl for this setup:**
-
-✅ **Faster Setup** - Creates cluster in ~15 minutes vs 20-25 with Terraform  
-✅ **Purpose-Built** - Designed specifically for EKS management  
-✅ **Simpler** - No state management, no complex configurations  
-✅ **Automatic** - Handles VPC, subnets, security groups automatically  
-✅ **Educational** - Shows actual EKS commands users will use  
-✅ **Quick Iterations** - Easy to recreate for learning  
-
-**Perfect for tutorials and learning!**
-
-## 💰 Cost Breakdown (eu-west-1)
-
-| Resource | Monthly Cost |
-|----------|--------------|
-| EKS Control Plane | ~$73 |
-| 2x t3.medium nodes | ~$60 |
-| NAT Gateway | ~$45 |
-| Application Load Balancer | ~$20 |
-| **Total** | **~$195-200/month** |
-
-## � Verify SSL Certificate Creation
+## Verify SSL Certificate Creation
 
 After applying the ingress, cert-manager will automatically request a Let's Encrypt certificate:
 
@@ -220,103 +215,60 @@ The certificate should show `Ready: True` status. If not, check:
 - DNS is pointing to the load balancer
 - Domain is accessible from the internet
 - cert-manager pods are running
+- cert-manager logs for errors
 
-## �🛠 Troubleshooting
 
-### Common Issues:
+> [!NOTE]
+>
+> It may take a few minutes (around 5-10 minutes) for the SSL certificate to be issued by Let's Encrypt, or getting `Pending` status is normal during this time, it will automatically update to `True` once issued.
 
-1. **AWS credentials not configured**
-   ```bash
-   aws configure
-   ```
+---
 
-2. **Region mismatch**
-   ```bash
-   # Check current region
-   aws configure get region
-   # Should be: eu-west-1
-   ```
+### Access ArgoCD (after HTTPS setup):
 
-3. **Cluster not accessible**
-   ```bash
-   # Re-configure kubectl
-   aws eks update-kubeconfig --region eu-west-1 --name argocd-cluster
-   ```
+Open your browser in incognito mode (if you tried previously in normal mode or else use another browser if you still getting http) and navigate to `https://argocd.yourdomain.com`.
 
-4. **ArgoCD pods not starting**
-   ```bash
-   # Check pod status
-   kubectl get pods -n argocd
-   
-   # Check node resources
-   kubectl top nodes
-   ```
+- Access ArgoCD at `https://argocd.yourdomain.com`
 
-5. **SSL Certificate not issuing**
-   ```bash
-   # Check certificate status
-   kubectl get certificate -n argocd
-   
-   # Check certificate request details
-   kubectl describe certificaterequest -n argocd
-   
-   # Check Let's Encrypt challenge
-   kubectl get challenge -n argocd
-   
-   # Check cert-manager logs
-   kubectl logs -n cert-manager deployment/cert-manager
-   ```
+  ![argocd-https](output_images/image-9.png)
 
-6. **Domain not resolving**
-   ```bash
-   # Test DNS resolution
-   nslookup argocd.letsdeployit.com
-   
-   # Check if domain points to load balancer
-   kubectl get svc -n ingress-nginx
-   ```
+  ![argocd-https](output_images/image-10.png)
 
-### Useful Commands:
+  ![argocd-certs](output_images/image-11.png)
+
+- Username: `admin`
+- Password: Use the initial admin secret, then change it
+
+  ```bash
+  kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d 
+  ```
+
+---
+
+## Try creating applications in ArgoCD
+
+1. Deploy our online-shop (or any other app from `argocd-demos` repo) application that we used in previous examples (you can use path `multicluster/online-shop`).
+
+    ![argocd-online-shop](output_images/image-1.png)
+
+---
+
+## Cleanup
+
+To destroy the cluster and all resources:
 
 ```bash
-# Check cluster status
-kubectl get nodes
-
-# Check ArgoCD pods
-kubectl get pods -n argocd
-
-# Get ArgoCD admin password
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-
-# Check ingress
-kubectl get ingress -n argocd
-
-# View load balancer details
-kubectl get svc -n ingress-nginx
-
-# Check SSL certificate status
-kubectl get certificate -n argocd
-
-# View certificate details
-kubectl describe certificate argocd-server-tls -n argocd
-
-# Check cert-manager components
-kubectl get pods -n cert-manager
+# Delete the entire cluster (this removes everything)
+eksctl delete cluster --name argocd-cluster --region eu-west-1
 ```
 
-## 🔒 Security Best Practices
+This command will:
+- 🗑️ Delete all applications and pods
+- 🗑️ Remove node groups and EC2 instances  
+- 🗑️ Delete VPC, subnets, and networking components
+- 🗑️ Remove load balancers and security groups
+- ⚡ Complete cleanup in 10-15 minutes
 
-- ✅ EKS cluster uses private subnets for worker nodes
-- ✅ IRSA (IAM Roles for Service Accounts) enabled
-- ✅ Network ACLs and Security Groups configured
-- ⚠️ Change default ArgoCD admin password immediately
-- ⚠️ Configure RBAC for ArgoCD users
-- ⚠️ Enable audit logging for production use
+---
 
-## 🎯 Next Steps After Setup
-
-1. **Configure ArgoCD RBAC** for team access
-2. **Set up monitoring** with Prometheus/Grafana
-3. **Configure backup** for ArgoCD configurations
-4. **Set up GitOps workflows** with your application repositories
-5. **Enable notifications** for deployment status
+Happy Learning!
