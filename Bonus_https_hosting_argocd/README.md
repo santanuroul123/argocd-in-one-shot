@@ -280,11 +280,11 @@ eksctl delete cluster --name argocd-cluster --region eu-west-1
 ```
 
 This command will:
-- 🗑️ Delete all applications and pods
-- 🗑️ Remove node groups and EC2 instances  
-- 🗑️ Delete VPC, subnets, and networking components
-- 🗑️ Remove load balancers and security groups
-- ⚡ Complete cleanup in 10-15 minutes
+- Delete all applications and pods
+- Remove node groups and EC2 instances  
+- Delete VPC, subnets, and networking components
+- Remove security groups etc. related to the cluster
+- Complete cleanup in 10-15 minutes
 
 ---
 
