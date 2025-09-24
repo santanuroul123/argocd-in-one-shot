@@ -5,10 +5,10 @@ metadata:
   name: argocd-server-ingress
   namespace: argocd
   annotations:
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true" # Enable SSL passthrough, meaning the ingress will forward HTTPS traffic directly to the backend service without terminating SSL.
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true" # Redirect HTTP to HTTPS
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" # Specify that the backend service uses HTTPS
+    cert-manager.io/cluster-issuer: letsencrypt-prod # Reference to the ClusterIssuer created earlier
 spec:
   ingressClassName: nginx
   rules:
@@ -25,4 +25,4 @@ spec:
   tls:
   - hosts:
     - argocd.letsdeployit.com  # Replace with your domain
-    secretName: argocd-server-tls
+    secretName: argocd-server-tls # Name of the TLS secret to be created by cert-manager

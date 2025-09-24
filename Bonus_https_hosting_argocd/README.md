@@ -1,77 +1,99 @@
 # ArgoCD HTTPS Hosting on EKS
 
-This directory contains everything needed to set up ArgoCD with HTTPS domain support on AWS EKS.
+Simple step-by-step guide to set up ArgoCD with HTTPS domain support on AWS EKS using direct `eksctl` commands.
 
-## Directory Structure
+## Directory
 
 ```
 Bonus_https_hosting_argocd/
-├── setup-eks.sh           # Automated EKS cluster setup
-├── destroy-eks.sh         # Safe cluster destruction
-├── argocd-ingress.yaml    # Ingress with cert-manager annotations
+├── argocd-ingress.yaml     # Ingress with cert-manager annotations
 ├── letsencrypt-issuer.yaml # Let's Encrypt ClusterIssuer config
-├── README.md              # This documentation
-└── terraform/             # Terraform infrastructure code
-    ├── main.tf            # Core EKS and VPC configuration
-    ├── variables.tf       # Input variables (eu-west-1)
-    └── outputs.tf         # Output values
+└── README.md               # This documentation
 ```
 
 ## Prerequisites
 
 Before starting, ensure you have:
 
-1. **AWS CLI** installed and configured ( with **AWS IAM permissions** for EKS, VPC, EC2, and IAM operations)
+1. **AWS CLI** installed and configured(with policy of `eks` related, use `admin` for this guide.)
+
    ```bash
    aws configure
    ```
 
-2. **Terraform** installed (>= 1.0) (Use Linux: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+2. **eksctl** installed
+
    ```bash
-   terraform --version
+   # Linux/WSL
+   curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+   sudo mv /tmp/eksctl /usr/local/bin
    ```
 
-3. **kubectl** installed (for cluster interaction)
+3. **kubectl** installed
+
    ```bash
    kubectl version --client
    ```
 
-5. **Domain name** 
+4. **Helm** installed
 
-## 🚀 Quick Start
+   ```bash
+   helm version
+   ```
 
-### 1. Setup EKS Cluster
+   [Install Guide](https://helm.sh/docs/intro/install/)
+
+5. **Domain name** registered.
+
+---
+
+## Step-by-Step Setup
+
+### Step 1: Create EKS Cluster
 
 ```bash
-# Navigate to this directory
-cd Bonus_https_hosting_argocd
-
-# Make scripts executable (Linux/Mac/WSL)
-chmod +x setup-eks.sh destroy-eks.sh
-
-# Run setup script
-./setup-eks.sh
+# Create EKS Cluster
+eksctl create cluster --name argocd-cluster --region eu-west-1 --without-nodegroup
 ```
 
-The script will:
-- ✅ Validate prerequisites (AWS CLI, Terraform, credentials)
-- ✅ Show cost estimates (~$175-180/month)
-- ✅ Create EKS cluster in `eu-west-1`
-- ✅ Set up VPC with public/private subnets
-- ✅ Configure 2x t2.micro worker nodes
+### Step 2: Verify Cluster Creation
 
-### 2. Connect to Cluster
-
-After successful setup:
 ```bash
-# Configure kubectl (command provided by setup script)
+eksctl get clusters --region eu-west-1
+```
+
+### Step 3: Associate IAM OIDC Provider
+
+```bash
+eksctl utils associate-iam-oidc-provider --region=eu-west-1 --cluster=argocd-cluster --approve
+```
+
+### Step 4: Create Node Group
+
+```bash
+eksctl create nodegroup \
+--cluster=argocd-cluster \
+--region=eu-west-1 \
+--name=argocd-ng \
+--node-type=t3.medium \
+--nodes=2 \
+--nodes-min=1 \
+--nodes-max=3 \
+--node-volume-size=20 \
+--managed
+```
+
+### Step 5: Verify Cluster Access
+
+```bash
+# Update kubeconfig
 aws eks update-kubeconfig --region eu-west-1 --name argocd-cluster
 
-# Verify connection
+# Verify nodes
 kubectl get nodes
 ```
 
-### 3. Install ArgoCD
+### Step 6: Install ArgoCD
 
 ```bash
 # Create namespace
@@ -80,60 +102,51 @@ kubectl create namespace argocd
 # Install ArgoCD
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-# Wait for pods to be ready (may take 2-3 minutes)
+# Wait for pods to be ready
 kubectl wait --for=condition=ready pod --all -n argocd --timeout=300s
 ```
 
-### 4. Setup HTTPS with Automatic SSL Certificates
-
-#### Install Required Components
+### Step 7: Install NGINX Ingress Controller
 
 ```bash
-# Install NGINX Ingress Controller
+# Add Helm repository
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
+
+# Install ingress controller
 helm install my-ingress-nginx ingress-nginx/ingress-nginx \
   --namespace ingress-nginx \
   --create-namespace \
   --set controller.enableSSLPassthrough=true
+```
 
-# Install cert-manager for automatic SSL certificates
+### Step 8: Install cert-manager for SSL Certificates
+
+```bash
+# Install cert-manager
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml
 
 # Wait for cert-manager to be ready
 kubectl wait --for=condition=ready pod -l app.kubernetes.io/instance=cert-manager -n cert-manager --timeout=300s
 ```
 
-#### Configure Let's Encrypt and Ingress
+### Step 9: Configure Let's Encrypt and HTTPS
 
 ```bash
-# Create Let's Encrypt ClusterIssuer (update email in letsencrypt-issuer.yaml)
+# Apply Let's Encrypt issuer (update email in letsencrypt-issuer.yaml first)
 kubectl apply -f letsencrypt-issuer.yaml
 
-# Apply ArgoCD ingress with automatic SSL
+# Apply ArgoCD ingress with SSL
 kubectl apply -f argocd-ingress.yaml
 ```
 
-#### Update DNS
-Point your domain `argocd.letsdeployit.com` to the ingress load balancer:
+### Step 10: Update DNS and Access ArgoCD
+
 ```bash
-# Get the load balancer hostname
+# Get the load balancer hostname(External IP)
 kubectl get svc -n ingress-nginx
-```
 
-### 5. Access ArgoCD
-
-#### Temporary Access (for initial setup):
-```bash
-# Port forward to localhost
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-
-# Get initial admin password
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-
-# Access at https://localhost:8080
-# Username: admin
-# Password: (output from above command)
+# Point your domain argocd.letsdeployit.com to this load balancer in DNS as a CNAME record
 ```
 
 #### Production Access (after HTTPS setup):
@@ -141,20 +154,39 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 - Username: `admin`
 - Password: Use the initial admin secret, then change it
 
-## 🗑️ Cleanup
-
-To destroy the entire infrastructure:
-
 ```bash
-# From the Bonus_https_hosting_argocd directory
-./destroy-eks.sh
+# Get the initial admin password
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
-The script will:
-- ⚠️ Show multiple confirmation prompts
-- 🧹 Clean up ArgoCD applications first
-- 💥 Destroy all AWS infrastructure
-- 🗂️ Optionally remove local Terraform state
+## 🗑️ Cleanup
+
+To destroy the cluster and all resources:
+
+```bash
+# Delete the entire cluster (this removes everything)
+eksctl delete cluster --name argocd-cluster --region eu-west-1
+```
+
+This command will:
+- 🗑️ Delete all applications and pods
+- 🗑️ Remove node groups and EC2 instances  
+- 🗑️ Delete VPC, subnets, and networking components
+- �️ Remove load balancers and security groups
+- ⚡ Complete cleanup in 10-15 minutes
+
+## ⚡ Why eksctl over Terraform?
+
+**Benefits of using eksctl for this setup:**
+
+✅ **Faster Setup** - Creates cluster in ~15 minutes vs 20-25 with Terraform  
+✅ **Purpose-Built** - Designed specifically for EKS management  
+✅ **Simpler** - No state management, no complex configurations  
+✅ **Automatic** - Handles VPC, subnets, security groups automatically  
+✅ **Educational** - Shows actual EKS commands users will use  
+✅ **Quick Iterations** - Easy to recreate for learning  
+
+**Perfect for tutorials and learning!**
 
 ## 💰 Cost Breakdown (eu-west-1)
 
