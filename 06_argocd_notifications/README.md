@@ -36,7 +36,6 @@ ArgoCD Notifications provide a way to automatically send alerts about applicatio
               [Google Help](https://myaccount.google.com/security)
 
             2. Open **Google Account → Security → App passwords** (or go to [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)). You may be asked to sign in again.
-              [Google Help](https://support.google.com/accounts/answer/185833)
 
             3. Enter an app name like **ArgoCD SMTP** (this is just a label).
 
