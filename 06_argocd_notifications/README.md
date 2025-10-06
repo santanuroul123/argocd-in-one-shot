@@ -35,11 +35,17 @@ ArgoCD Notifications provide a way to automatically send alerts about applicatio
             1. Make sure **2-Step Verification** is turned **ON** for the Google account you’ll use. *(App passwords require 2-step verification.)*
               [Google Help](https://myaccount.google.com/security)
 
+                ![2-Step Verification - on](output_images/image-14.png)
+
             2. Open **Google Account → Security → App passwords** (or go to [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)). You may be asked to sign in again.
 
             3. Enter an app name like **ArgoCD SMTP** (this is just a label).
 
+                ![App Password](output_images/image-15.png)
+
             4. Click **Create**. Google will show a **16-character app password** (format: `xxxx xxxx xxxx xxxx`). **Copy it now — you won’t see it again.**
+            
+                ![App Password Generated](output_images/image-16.png)
           
           
 
