@@ -11,6 +11,7 @@ Before starting, ensure you have the following installed on your system:
 1. **Docker** → Required for Kind to run containers as cluster nodes.
 
    ```bash
+   sudo apt-get update
    sudo apt install docker.io -y
    sudo usermod -aG docker $USER && newgrp docker
    docker --version
