@@ -22,11 +22,11 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/<your-username>/argocd-demos.git
+        repoURL: https://github.com/santanuroul123/argocd-demos.git
         targetRevision: main
         path: '{{path}}'                # resolved from element
       destination:
-        server: https://kubernetes.default.svc
+        server: https://172.31.4.122:33893
         namespace: default
       syncPolicy:
         automated:
